@@ -9,7 +9,7 @@ h1,h2,h3,h4{font-family:"Playfair Display", serif; font-weight:500; letter-spaci
 .muted{color:var(--muted)}
 /* HERO refined */
 .hero{position:relative; overflow:hidden; min-height:66vh; display:grid; place-items:center; border-bottom:1px solid var(--line)}
-.hero::before{content:""; position:absolute; inset:0; background:url('https://images.unsplash.com/photo-1595428774223-ef5262410d0d?q=80&w=2000&auto=format&fit=crop') center/cover no-repeat; filter:saturate(.9) contrast(.95) brightness(.9)}
+.hero::before{content:""; position:absolute; inset:0; background:url('https://static.wixstatic.com/media/d77542_1baa8f118c7a4423a7975b7536517123~mv2.jpg') center/cover no-repeat; filter:saturate(.9) contrast(.95) brightness(.9)}
 .hero .overlay{position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,.28), rgba(0,0,0,.38))}
 .hero .content{position:relative; text-align:center; color:#fff; padding:40px 0}
 .hero h1{font-size: clamp(36px, 6vw, 68px)}
