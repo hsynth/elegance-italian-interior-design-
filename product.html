@@ -90,3 +90,28 @@
 </script>
 </body>
 </html>
+<script>
+  (function autoResizeToWix(){
+    function postH(){
+      try{
+        var h = Math.max(
+          document.documentElement.scrollHeight,
+          document.body ? document.body.scrollHeight : 0
+        );
+        parent && parent.postMessage({type:'EW_IFRAME_RESIZE', height:h}, '*');
+      }catch(e){}
+    }
+    // Resize au chargement + sur changements de layout
+    window.addEventListener('load', postH);
+    window.addEventListener('resize', postH);
+    new (window.ResizeObserver||function(){return {observe:function(){}}}) (postH)
+      .observe(document.documentElement);
+    // Garde le body scrollable si jamais
+    document.documentElement.style.overflow = 'visible';
+    document.body && (document.body.style.overflow = 'visible');
+    // Tick au cas où des images chargent après
+    setTimeout(postH, 300);
+    setTimeout(postH, 1200);
+  })();
+</script>
+
