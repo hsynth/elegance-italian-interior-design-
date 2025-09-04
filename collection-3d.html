@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Prestige — Collection</title>
+<title>3D — Collection</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 <style>
   html,body{margin:0;background:#f8f8f6;color:#111;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial}
@@ -18,7 +18,6 @@
   .tile h3{text-align:center;font-family:"Playfair Display",serif;font-weight:400;margin:10px 0 0}
   @media(min-width:900px){.tile{grid-column:span 6}}
 
-  /* Mobile polish */
   html, body { overscroll-behavior:none; overflow:visible; -webkit-tap-highlight-color:transparent; }
   @media(max-width:768px){ .grid{gap:16px} .tile img{aspect-ratio:3/2} .back{top:max(12px,env(safe-area-inset-top))} }
   img{content-visibility:auto;contain-intrinsic-size:800px 600px}
@@ -32,8 +31,8 @@
   </a>
   <div class="header">
     <div>
-      <h1>Prestige</h1>
-      <div class="muted">Sélection haut de gamme</div>
+      <h1>3D</h1>
+      <div class="muted">Reliefs & lumière</div>
     </div>
   </div>
 
@@ -41,31 +40,64 @@
 </div>
 
 <script>
-<!-- … head identique, titre Gold … -->
-<script>
-  const COLLECTION_NAME = "Gold";
+  const COLLECTION_NAME = "3D";
   const ITEMS = [
-    { title:"CPGMRAL", images:[
-      "https://static.wixstatic.com/media/d77542_7e074adac0ad4364977e5b6d11166194~mv2.jpg",
-      "https://static.wixstatic.com/media/d77542_7965819a3c0844a09afc4f2c0c7fe5ca~mv2.jpg",
-      "https://static.wixstatic.com/media/d77542_4cabe940c446412fbab93105708ce877~mv2.jpg",
-      "https://static.wixstatic.com/media/d77542_af3b34c9608c4999876741d86af44228~mv2.jpg",
-    ], desc:"Dorures texturées, reflets contrôlés et raffinement contemporain."},
+    { title:"Fairy Leaves", images:[
+      "https://static.wixstatic.com/media/d77542_6e88f99b79d842289fc245aa6f585a88~mv2.jpg",
+      "https://static.wixstatic.com/media/d77542_e80c83f8301f46eb91744df98d6cbcf4~mv2.jpg",
+      "https://static.wixstatic.com/media/d77542_4476f79efc6147d885c30be713ab74e6~mv2.jpg",
+    ], desc:"Feuillages sculptés, lumière douce et relief maîtrisé."},
 
-    { title:"Cubes", images:[
-      "https://static.wixstatic.com/media/d77542_f0faa6b345064f458dbccb8d1c41c371~mv2.jpg",
-      "https://static.wixstatic.com/media/d77542_268e7b4930c84ac2a331d51cb6bd0518~mv2.jpg",
-    ], desc:"Géométrie en trompe-l’œil, jeu d’ombres métalliques."},
+    { title:"Falling Lines", images:[
+      "https://static.wixstatic.com/media/d77542_778500da641445beb6f2fa620d641efe~mv2.jpg",
+      "https://static.wixstatic.com/media/d77542_5788604e493142cfa00a90bc39a3273a~mv2.jpg",
+      "https://static.wixstatic.com/media/d77542_0ad7dd7cb1904487b75f352b007558b4~mv2.jpg",
+    ], desc:"Strates verticales en mouvement, effet architectural."},
 
-    { title:"Gold Jungle", images:[
-      "https://static.wixstatic.com/media/d77542_0787547e7162414e86a7ee9829978584~mv2.jpg",
-      "https://static.wixstatic.com/media/d77542_0775c1cc60b44b9eb18d8533f518db04~mv2.jpg",
-    ], desc:"Feuillages luxuriants dorés, ambiance précieuse."},
+    { title:"Groove", images:[
+      "https://static.wixstatic.com/media/d77542_f8d88f836fc64df8b351225c370e1e72~mv2.jpg",
+      "https://static.wixstatic.com/media/d77542_7ab199a2b2224116a1752b9c5b089ac1~mv2.jpg",
+      "https://static.wixstatic.com/media/d77542_4ec0fb4865b641adbebaee2ce9c3ca19~mv2.jpg",
+    ], desc:"Rainures graphiques, volume dynamique et sobre."},
 
-    { title:"Golden Rose", images:[
-      "https://static.wixstatic.com/media/d77542_d7652637bfe24ee2a36b9e15f8c6b6ca~mv2.jpg",
-      "https://static.wixstatic.com/media/d77542_a5212e6a35954e16be82bb3a9c417868~mv2.jpg",
-    ], desc:"Rosace métallique subtile, lumière douce et chic."},
+    { title:"Large Leaves", images:[
+      "https://static.wixstatic.com/media/d77542_be742bd255bf43079eaab25949174863~mv2.jpg",
+      "https://static.wixstatic.com/media/d77542_147808aee82b4a14b4583c73c68bdc25~mv2.jpg",
+      "https://static.wixstatic.com/media/d77542_ef7722d5c63547b5a858f93ec678f469~mv2.jpg",
+    ], desc:"Grandes feuilles en bas-relief, ambiance apaisante."},
+
+    { title:"Petals", images:[
+      "https://static.wixstatic.com/media/d77542_d43a6b1ad87541fc918fbe4c7239ddee~mv2.jpg",
+      "https://static.wixstatic.com/media/d77542_e17e80094fc24edd9f662112d2530d8e~mv2.jpg",
+      "https://static.wixstatic.com/media/d77542_02798f1e75124055983b4b1caac9be33~mv2.jpg",
+    ], desc:"Pétales en relief, douceur tactile et volumes apaisants."},
+
+    { title:"Rose", images:[
+      "https://static.wixstatic.com/media/d77542_6d37b0eb081e43eaba849b463348270e~mv2.jpg",
+      "https://static.wixstatic.com/media/d77542_d94048f6dbb943c1bcd9e1fb7b6df766~mv2.jpg",
+      "https://static.wixstatic.com/media/d77542_3d236ff2fd224bb3a80a59e8f37aae68~mv2.jpg",
+    ], desc:"Rosace en bas-relief, élégance intemporelle."},
   ];
-  /* … le reste du script est identique à prestige.html … */
+
+  const grid = document.getElementById('grid');
+  ITEMS.forEach(item=>{
+    const a=document.createElement('a'); a.href='product.html'; a.className='tile';
+    a.addEventListener('click',e=>{
+      e.preventDefault();
+      sessionStorage.setItem('EW_PRODUCT', JSON.stringify({
+        collection: COLLECTION_NAME, title: item.title, images: item.images, desc: item.desc
+      }));
+      location.href='product.html';
+    });
+    const img=new Image(); img.src=item.images[0]; img.alt=item.title; a.appendChild(img);
+    const h=document.createElement('h3'); h.textContent=item.title; a.appendChild(h);
+    grid.appendChild(a);
+  });
+
+  let rafId=0; function postH(){ if(rafId) return; rafId=requestAnimationFrame(()=>{rafId=0;try{var h=Math.max(document.documentElement.scrollHeight,document.body?document.body.scrollHeight:0);parent&&parent.postMessage({type:'EW_IFRAME_RESIZE',height:h},'*');}catch{}}); }
+  ['load','resize','orientationchange'].forEach(e=>window.addEventListener(e,postH,{passive:true}));
+  new (window.ResizeObserver||function(){return{observe(){}}})(postH).observe(document.documentElement);
+  setTimeout(postH,250); setTimeout(postH,1200);
 </script>
+</body>
+</html>
