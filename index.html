@@ -1,181 +1,119 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Elegance — Papiers Peints</title>
-  <link rel="stylesheet" href="styles.css"/>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
-</head>
-<body>
-<div id="ew" style="--header-h:120px">
+<!-- Three.js UMD (pas de module) -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.161.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.161.0/examples/js/controls/OrbitControls.js"></script>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="overlay"></div>
-  </section>
+<script>
+  (function(){
+    var container = document.getElementById('stage3d');
+    if(!container){ return; }
 
-  <!-- Collections -->
-  <section class="section">
-    <div class="container">
-      <div style="text-align:center;margin-bottom:26px">
-        <h1>Nos Collections</h1>
-        <p class="muted">Prestige · 3D · Gold</p>
-      </div>
-      <div class="grid">
-        <a class="card" href="prestige.html">
-          <img alt="Prestige" src="https://static.wixstatic.com/media/d77542_fe3d4bf7270746ca91adab75028f8e96~mv2.png">
-          <footer><h3>Prestige</h3><span class="chip">Découvrir</span></footer>
-        </a>
-        <a class="card" href="collection-3d.html">
-          <img alt="3D" src="https://static.wixstatic.com/media/d77542_50d7633186c141a79a57e2549d69c278~mv2.png">
-          <footer><h3>3D</h3><span class="chip">Découvrir</span></footer>
-        </a>
-        <a class="card" href="gold.html">
-          <img alt="Gold" src="https://static.wixstatic.com/media/d77542_74d9f4d77e5a44819123f2b70d71030b~mv2.png">
-          <footer><h3>Gold</h3><span class="chip">Découvrir</span></footer>
-        </a>
-      </div>
-    </div>
-  </section>
+    var scene = new THREE.Scene();
+    scene.background = new THREE.Color(0xf8f8f6);
 
-  <!-- Configurateur 3D -->
-  <section class="section config" id="configurateur">
-    <div class="container">
-      <div style="text-align:center;margin-bottom:24px">
-        <h2>Configurateur personnalisé</h2>
-        <p class="muted">Importez votre motif, ajustez l’échelle/rotation/offset et visualisez-le sur un mur 3D.</p>
-      </div>
+    var renderer = new THREE.WebGLRenderer({antialias:true, preserveDrawingBuffer:true});
+    container.appendChild(renderer.domElement);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.8));
 
-      <div class="wrap">
-        <div class="panel">
-          <label for="fileInput">Image du motif</label>
-          <input id="fileInput" type="file" accept="image/*"/>
+    var camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+    camera.position.set(0.9, 1.5, 4.2);
 
-          <label for="scale">Échelle</label>
-          <input type="range" id="scale" min="0.5" max="3" step="0.05" value="1"/>
-
-          <label for="rotation">Rotation</label>
-          <input type="range" id="rotation" min="0" max="360" step="1" value="0"/>
-
-          <div class="row">
-            <div>
-              <label for="offx">Décalage X</label>
-              <input type="number" id="offx" step="0.05" value="0"/>
-            </div>
-            <div>
-              <label for="offy">Décalage Y</label>
-              <input type="number" id="offy" step="0.05" value="0"/>
-            </div>
-          </div>
-
-          <div class="row" style="margin-top:10px">
-            <button class="btn ghost" id="reset">Réinitialiser</button>
-            <button class="btn" id="download">Télécharger l’aperçu</button>
-          </div>
-        </div>
-
-        <div class="stage3d">
-          <div id="stage3d"></div>
-          <div class="hint">Souris : orbiter · molette : zoom</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-</div>
-
-<!-- Three.js (module) -->
-<script type="module">
-  import * as THREE from 'https://unpkg.com/three@0.161.0/build/three.module.js';
-  import { OrbitControls } from 'https://unpkg.com/three@0.161.0/examples/jsm/controls/OrbitControls.js';
-
-  const container = document.getElementById('stage3d');
-  const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0xf8f8f6);
-
-  const renderer = new THREE.WebGLRenderer({antialias:true, preserveDrawingBuffer:true});
-  container.appendChild(renderer.domElement);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.8));
-
-  const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
-  camera.position.set(0.9, 1.5, 4.2);
-
-  const controls = new OrbitControls(camera, renderer.domElement);
-  controls.enableDamping = true;
-  controls.dampingFactor = 0.05;
-  controls.target.set(0, 1.25, 0);
-  controls.update();
-
-  // Lumière douce
-  scene.add(new THREE.HemisphereLight(0xffffff, 0xbbbbaa, 0.9));
-  const dir = new THREE.DirectionalLight(0xffffff, 0.6);
-  dir.position.set(2.5, 4, 3); scene.add(dir);
-
-  // Sol + murs (pièce simple)
-  const grp = new THREE.Group(); scene.add(grp);
-  const floor = new THREE.Mesh(new THREE.PlaneGeometry(8,6), new THREE.MeshStandardMaterial({color:0xdddddd, roughness:0.95}));
-  floor.rotation.x = -Math.PI/2; floor.position.y = 0; grp.add(floor);
-
-  const wallMat = new THREE.MeshStandardMaterial({color:0xf4f4f4});
-  const wall = new THREE.Mesh(new THREE.PlaneGeometry(4.5, 2.7), wallMat);
-  wall.position.set(0,1.35,-1.8); grp.add(wall);
-
-  const wall2 = new THREE.Mesh(new THREE.PlaneGeometry(3.2, 2.7), new THREE.MeshStandardMaterial({color:0xeeeeee}));
-  wall2.position.set(-2.25,1.35,-0.2); wall2.rotation.y = Math.PI/2.6; grp.add(wall2);
-
-  // Taille responsive
-  function resize(){
-    const w = container.clientWidth, h = container.clientHeight || 520;
-    renderer.setSize(w,h); camera.aspect = w/h; camera.updateProjectionMatrix();
-  }
-  new ResizeObserver(resize).observe(container);
-
-  // Texture motif
-  const loader = new THREE.TextureLoader(); let motif = null;
-  const $ = id => document.getElementById(id);
-  const ui = { scale: $('scale'), rotation: $('rotation'), offx: $('offx'), offy: $('offy') };
-
-  function applyTex(tex){
-    tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
-    tex.repeat.set(parseFloat(ui.scale.value), parseFloat(ui.scale.value));
-    tex.rotation = THREE.MathUtils.degToRad(parseFloat(ui.rotation.value||0));
-    tex.offset.set(parseFloat(ui.offx.value||0), parseFloat(ui.offy.value||0));
-    wall.material.map = tex; wall.material.needsUpdate = true;
-  }
-
-  $('fileInput').addEventListener('change', e=>{
-    const f = e.target.files[0]; if(!f) return;
-    const url = URL.createObjectURL(f);
-    loader.load(url, t=>{ motif = t; applyTex(motif); URL.revokeObjectURL(url); });
-  });
-
-  ['input','change'].forEach(evt=>{
-    ui.scale.addEventListener(evt, ()=> motif && (motif.repeat.set(+ui.scale.value, +ui.scale.value), motif.needsUpdate=true));
-    ui.rotation.addEventListener(evt, ()=> motif && (motif.rotation = THREE.MathUtils.degToRad(+ui.rotation.value), motif.needsUpdate=true));
-    ui.offx.addEventListener(evt, ()=> motif && (motif.offset.x = +ui.offx.value, motif.needsUpdate=true));
-    ui.offy.addEventListener(evt, ()=> motif && (motif.offset.y = +ui.offy.value, motif.needsUpdate=true));
-  });
-
-  $('reset').addEventListener('click', ()=>{
-    ui.scale.value = 1; ui.rotation.value = 0; ui.offx.value = 0; ui.offy.value = 0;
-    camera.position.set(0.9,1.5,4.2); controls.target.set(0,1.25,0); controls.update();
-    motif && applyTex(motif);
-  });
-
-  $('download').addEventListener('click', ()=>{
-    const a = document.createElement('a');
-    a.download = 'aperçu-3d.png';
-    a.href = renderer.domElement.toDataURL('image/png', 0.95);
-    a.click();
-  });
-
-  // Render loop
-  (function loop(){
-    requestAnimationFrame(loop);
+    var controls = new THREE.OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
+    controls.target.set(0, 1.25, 0);
     controls.update();
-    renderer.render(scene, camera);
+
+    // Lumières
+    scene.add(new THREE.HemisphereLight(0xffffff, 0xbbbbaa, 0.9));
+    var dir = new THREE.DirectionalLight(0xffffff, 0.6);
+    dir.position.set(2.5,4,3);
+    scene.add(dir);
+
+    // Pièce (sol + 2 murs)
+    var grp = new THREE.Group(); scene.add(grp);
+    var floor = new THREE.Mesh(
+      new THREE.PlaneGeometry(8,6),
+      new THREE.MeshStandardMaterial({color:0xdddddd, roughness:0.95})
+    );
+    floor.rotation.x = -Math.PI/2; grp.add(floor);
+
+    var wallMat = new THREE.MeshStandardMaterial({color:0xf4f4f4});
+    var wall = new THREE.Mesh(new THREE.PlaneGeometry(4.5,2.7), wallMat);
+    wall.position.set(0,1.35,-1.8); grp.add(wall);
+
+    var wall2 = new THREE.Mesh(
+      new THREE.PlaneGeometry(3.2,2.7),
+      new THREE.MeshStandardMaterial({color:0xeeeeee})
+    );
+    wall2.position.set(-2.25,1.35,-0.2);
+    wall2.rotation.y = Math.PI/2.6; grp.add(wall2);
+
+    function resize(){
+      var w = container.clientWidth;
+      var h = container.clientHeight || 520;
+      renderer.setSize(w,h);
+      camera.aspect = w/h;
+      camera.updateProjectionMatrix();
+    }
+    new ResizeObserver(resize).observe(container);
+    resize();
+
+    var loader = new THREE.TextureLoader(); var motif = null;
+    var $ = function(id){ return document.getElementById(id); };
+    var ui = { scale: $('scale'), rotation: $('rotation'), offx: $('offx'), offy: $('offy') };
+
+    function applyTex(tex){
+      tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+      tex.repeat.set(parseFloat(ui.scale.value||1), parseFloat(ui.scale.value||1));
+      tex.rotation = THREE.MathUtils.degToRad(parseFloat(ui.rotation.value||0));
+      tex.offset.set(parseFloat(ui.offx.value||0), parseFloat(ui.offy.value||0));
+      wall.material.map = tex; wall.material.needsUpdate = true;
+    }
+
+    var fileInput = $('fileInput');
+    if(fileInput){
+      fileInput.addEventListener('change', function(e){
+        var f = e.target.files && e.target.files[0]; if(!f) return;
+        var url = URL.createObjectURL(f);
+        loader.load(url, function(t){ motif = t; applyTex(motif); URL.revokeObjectURL(url); });
+      });
+    }
+
+    ['input','change'].forEach(function(evt){
+      ui.scale && ui.scale.addEventListener(evt, function(){ if(motif){ motif.repeat.set(+ui.scale.value, +ui.scale.value); motif.needsUpdate=true; }});
+      ui.rotation && ui.rotation.addEventListener(evt, function(){ if(motif){ motif.rotation = THREE.MathUtils.degToRad(+ui.rotation.value); motif.needsUpdate=true; }});
+      ui.offx && ui.offx.addEventListener(evt, function(){ if(motif){ motif.offset.x = +ui.offx.value; motif.needsUpdate=true; }});
+      ui.offy && ui.offy.addEventListener(evt, function(){ if(motif){ motif.offset.y = +ui.offy.value; motif.needsUpdate=true; }});
+    });
+
+    var resetBtn = document.getElementById('reset');
+    if(resetBtn){
+      resetBtn.addEventListener('click', function(){
+        if(ui.scale) ui.scale.value = 1;
+        if(ui.rotation) ui.rotation.value = 0;
+        if(ui.offx) ui.offx.value = 0;
+        if(ui.offy) ui.offy.value = 0;
+        camera.position.set(0.9,1.5,4.2);
+        controls.target.set(0,1.25,0);
+        controls.update();
+        if(motif){ applyTex(motif); }
+      });
+    }
+
+    var dlBtn = document.getElementById('download');
+    if(dlBtn){
+      dlBtn.addEventListener('click', function(){
+        var a = document.createElement('a');
+        a.download = 'aperçu-3d.png';
+        a.href = renderer.domElement.toDataURL('image/png', 0.95);
+        a.click();
+      });
+    }
+
+    (function loop(){
+      requestAnimationFrame(loop);
+      controls.update();
+      renderer.render(scene, camera);
+    })();
   })();
 </script>
-</body>
-</html>
