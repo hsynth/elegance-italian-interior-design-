@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Prestige — Collection</title>
+<title>Gold — Collection</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 <style>
   html,body{margin:0;background:#f8f8f6;color:#111;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial}
@@ -18,7 +18,6 @@
   .tile h3{text-align:center;font-family:"Playfair Display",serif;font-weight:400;margin:10px 0 0}
   @media(min-width:900px){.tile{grid-column:span 6}}
 
-  /* Mobile polish */
   html, body { overscroll-behavior:none; overflow:visible; -webkit-tap-highlight-color:transparent; }
   @media(max-width:768px){ .grid{gap:16px} .tile img{aspect-ratio:3/2} .back{top:max(12px,env(safe-area-inset-top))} }
   img{content-visibility:auto;contain-intrinsic-size:800px 600px}
@@ -32,16 +31,14 @@
   </a>
   <div class="header">
     <div>
-      <h1>Prestige</h1>
-      <div class="muted">Sélection haut de gamme</div>
+      <h1>Gold</h1>
+      <div class="muted">Dorures & reflets précieux</div>
     </div>
   </div>
 
   <div class="grid" id="grid"></div>
 </div>
 
-<script>
-<!-- … head identique, titre Gold … -->
 <script>
   const COLLECTION_NAME = "Gold";
   const ITEMS = [
@@ -51,6 +48,12 @@
       "https://static.wixstatic.com/media/d77542_4cabe940c446412fbab93105708ce877~mv2.jpg",
       "https://static.wixstatic.com/media/d77542_af3b34c9608c4999876741d86af44228~mv2.jpg",
     ], desc:"Dorures texturées, reflets contrôlés et raffinement contemporain."},
+
+    { title:"CPGSRAL", images:[
+      "https://static.wixstatic.com/media/d77542_b4a5ae8ee1d846a1bf205aa795d67490~mv2.jpg",
+      "https://static.wixstatic.com/media/d77542_73456070f7e743b9841c9c9940535ab1~mv2.jpg",
+      "https://static.wixstatic.com/media/d77542_8f641e1132264de0b3234715983bf444~mv2.jpg",
+    ], desc:"Fine marbrure dorée, élégance discrète."},
 
     { title:"Cubes", images:[
       "https://static.wixstatic.com/media/d77542_f0faa6b345064f458dbccb8d1c41c371~mv2.jpg",
@@ -62,10 +65,81 @@
       "https://static.wixstatic.com/media/d77542_0775c1cc60b44b9eb18d8533f518db04~mv2.jpg",
     ], desc:"Feuillages luxuriants dorés, ambiance précieuse."},
 
+    { title:"Gold Leaves", images:[
+      "https://static.wixstatic.com/media/d77542_afa1d67af0d049f6bf9ca301b6a3458b~mv2.jpg",
+      "https://static.wixstatic.com/media/d77542_434243bde88341b5978125b061f6b375~mv2.jpg",
+    ], desc:"Feuilles dorées texturées, délicatesse et chaleur."},
+
     { title:"Golden Rose", images:[
       "https://static.wixstatic.com/media/d77542_d7652637bfe24ee2a36b9e15f8c6b6ca~mv2.jpg",
       "https://static.wixstatic.com/media/d77542_a5212e6a35954e16be82bb3a9c417868~mv2.jpg",
     ], desc:"Rosace métallique subtile, lumière douce et chic."},
+
+    { title:"Holy Heart", images:[
+      "https://static.wixstatic.com/media/d77542_9f62e777d5f443cb8341961e4043a422~mv2.jpg",
+      "https://static.wixstatic.com/media/d77542_0205ca7ead644ccfbebf071a1bef89de~mv2.jpg",
+    ], desc:"Motif sacré stylisé, or nuancé."},
+
+    { title:"Intense Dream", images:[
+      "https://static.wixstatic.com/media/d77542_94aedb2034dc4974bccac1a45d20643f~mv2.jpg",
+      "https://static.wixstatic.com/media/d77542_4c2ecb6ad34c41ee830a20293837f608~mv2.jpg",
+    ], desc:"Rêverie dorée, dégradés intenses et profonds."},
+
+    { title:"Kyoto", images:[
+      "https://static.wixstatic.com/media/d77542_65a5769d31654f23af5e292bf80ba17f~mv2.jpg",
+      "https://static.wixstatic.com/media/d77542_3e8915ff926847109a92fbaac3ea7fb9~mv2.jpg",
+    ], desc:"Esthétique japonaise, feuilles d’or et minimalisme."},
+
+    { title:"Maple", images:[
+      "https://static.wixstatic.com/media/d77542_29e70c20476740b08ebae8a21146651a~mv2.jpg",
+      "https://static.wixstatic.com/media/d77542_0888f731c8e14603a5d429158a3984ca~mv2.jpg",
+    ], desc:"Érable stylisé, nuances automnales dorées."},
+
+    { title:"Oriental", images:[
+      "https://static.wixstatic.com/media/d77542_02d7bca6801d4830bbcdda400c6e8d0c~mv2.jpg",
+      "https://static.wixstatic.com/media/d77542_99f16172abd549ff865f0b23e5e0285e~mv2.jpg",
+    ], desc:"Ornements orientaux, finesse et brillance."},
+
+    { title:"Precious Marble", images:[
+      "https://static.wixstatic.com/media/d77542_aa70d9a9586f4e0a8f2835bb66c80200~mv2.jpg",
+      "https://static.wixstatic.com/media/d77542_f4b74e1ac2874c168a16c6bd7bcfba15~mv2.jpg",
+    ], desc:"Veines marbrées précieuses, reflets perles et or."},
+
+    { title:"Sea", images:[
+      "https://static.wixstatic.com/media/d77542_a4996577bf4f46709ac6ec428b53537f~mv2.jpg",
+      "https://static.wixstatic.com/media/d77542_8bb9f7fd86d348f0a6593e83a432715a~mv2.jpg",
+    ], desc:"Ondes métalliques, mouvements aquatiques dorés."},
+
+    { title:"Shades", images:[
+      "https://static.wixstatic.com/media/d77542_f8cc1919c2d34d6780432b5380c57b41~mv2.jpg",
+      "https://static.wixstatic.com/media/d77542_a037a9b456c047c2af88b6799e6836c5~mv2.jpg",
+    ], desc:"Dégradés dorés, subtilité et modernité."},
+
+    { title:"Soffio", images:[
+      "https://static.wixstatic.com/media/d77542_76fa3f4dd1dc48f78608459d88c5de10~mv2.jpg",
+      "https://static.wixstatic.com/media/d77542_66deb568090f48f785023367462958f3~mv2.jpg",
+    ], desc:"Souffle doré vaporeux, atmosphère précieuse."},
   ];
-  /* … le reste du script est identique à prestige.html … */
+
+  const grid = document.getElementById('grid');
+  ITEMS.forEach(item=>{
+    const a=document.createElement('a'); a.href='product.html'; a.className='tile';
+    a.addEventListener('click',e=>{
+      e.preventDefault();
+      sessionStorage.setItem('EW_PRODUCT', JSON.stringify({
+        collection: COLLECTION_NAME, title: item.title, images: item.images, desc: item.desc
+      }));
+      location.href='product.html';
+    });
+    const img=new Image(); img.src=item.images[0]; img.alt=item.title; a.appendChild(img);
+    const h=document.createElement('h3'); h.textContent=item.title; a.appendChild(h);
+    grid.appendChild(a);
+  });
+
+  let rafId=0; function postH(){ if(rafId) return; rafId=requestAnimationFrame(()=>{rafId=0;try{var h=Math.max(document.documentElement.scrollHeight,document.body?document.body.scrollHeight:0);parent&&parent.postMessage({type:'EW_IFRAME_RESIZE',height:h},'*');}catch{}}); }
+  ['load','resize','orientationchange'].forEach(e=>window.addEventListener(e,postH,{passive:true}));
+  new (window.ResizeObserver||function(){return{observe(){}}})(postH).observe(document.documentElement);
+  setTimeout(postH,250); setTimeout(postH,1200);
 </script>
+</body>
+</html>
