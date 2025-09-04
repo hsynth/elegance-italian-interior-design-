@@ -17,6 +17,11 @@
   .tile img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:14px;display:block;background:#f2f2f2}
   .tile h3{text-align:center;font-family:"Playfair Display",serif;font-weight:400;margin:10px 0 0}
   @media(min-width:900px){.tile{grid-column:span 6}}
+
+  /* Mobile polish */
+  html, body { overscroll-behavior:none; overflow:visible; -webkit-tap-highlight-color:transparent; }
+  @media(max-width:768px){ .grid{gap:16px} .tile img{aspect-ratio:3/2} .back{top:max(12px,env(safe-area-inset-top))} }
+  img{content-visibility:auto;contain-intrinsic-size:800px 600px}
 </style>
 </head>
 <body>
@@ -37,7 +42,7 @@
 
 <script>
   const COLLECTION_NAME = "Prestige";
-  // ——— Renseigne les produits ici (titre, images, description courte)
+  /* === ÉCHANTILLON — Ajoute d’autres modèles en copiant ce format === */
   const ITEMS = [
     { title:"Borderless", images:[
       "https://static.wixstatic.com/media/d77542_78b3ccb5edcc4753aa77c50c39b5291e~mv2.jpg",
@@ -61,54 +66,6 @@
       "https://static.wixstatic.com/media/d77542_209aadb11d8b4d77b699c304f6b78e58~mv2.jpg",
       "https://static.wixstatic.com/media/d77542_433a32a6106c41b5a2ec7eb881d3c167~mv2.jpg",
     ], desc:"Perspective cinématographique, horizon abstrait et matières profondes."},
-
-    { title:"Besides The Present", images:[
-      "https://static.wixstatic.com/media/d77542_6e8b869f6a694de5af2f8e4238763b1a~mv2.jpg",
-      "https://static.wixstatic.com/media/d77542_94f7398ffa224921b52953d51a5d00f7~mv2.jpg",
-      "https://static.wixstatic.com/media/d77542_73f17351b19b4ddbb5a345518a41ec55~mv2.jpg",
-    ], desc:"Un présent suspendu : textures minérales et clair-obscur chaleureux."},
-
-    { title:"Batik", images:[
-      "https://static.wixstatic.com/media/d77542_341f8655f3734ed9ba98ba514e12e821~mv2.jpg",
-      "https://static.wixstatic.com/media/d77542_54a672df60ff454588937a616679ab14~mv2.jpg",
-      "https://static.wixstatic.com/media/d77542_49bd611a8e59440a9a9ffb6b7b75193b~mv2.jpg",
-    ], desc:"Écho artisanal raffiné : micro-motifs teintés et irrégularités délicates."},
-
-    { title:"Autumn", images:[
-      "https://static.wixstatic.com/media/d77542_3ee5e4a72b5d4cbb88972dd901202d55~mv2.jpg",
-      "https://static.wixstatic.com/media/d77542_ed512e955cbb446993918f3d6b6d2212~mv2.jpg",
-    ], desc:"Feuillage texturé, tonalités automnales et douceur feutrée."},
-
-    { title:"Arcadia", images:[
-      "https://static.wixstatic.com/media/d77542_b01bcebb0f44480bb64533430382c232~mv2.jpg",
-      "https://static.wixstatic.com/media/d77542_ab460447c28e4c1d9212e06ea032ca07~mv2.jpg",
-    ], desc:"Paysage onirique, matières veloutées et modernité sereine."},
-
-    { title:"Aquarium Muralla", images:[
-      "https://static.wixstatic.com/media/d77542_252a386d6baf421983f7243d7331f33d~mv2.jpg",
-      "https://static.wixstatic.com/media/d77542_f087c1b3d6b54e35b5203588d3a05b7d~mv2.jpg",
-      "https://static.wixstatic.com/media/d77542_1df10c6192b143ac9939d2730d922c28~mv2.jpg",
-    ], desc:"Ondulations minérales inspirées de l’eau, nuance et profondeur maîtrisées."},
-
-    { title:"Angels", images:[
-      "https://static.wixstatic.com/media/d77542_92b9b3deced54279bd0acbcae351ff77~mv2.jpg",
-      "https://static.wixstatic.com/media/d77542_9f1dc69afb73471ab2cb3852fc3726b8~mv2.jpg",
-      "https://static.wixstatic.com/media/d77542_827dc15260ce49abafeeaed9eceb7be4~mv2.jpg",
-    ], desc:"Courbes aériennes, douceur céleste et élégance graphique."},
-
-    { title:"Altrove", images:[
-      "https://static.wixstatic.com/media/d77542_396d420d45a7457ca9e5f4ef659365ee~mv2.jpg"
-    ], desc:"Un ailleurs poétique : volumes diffus et matière nuageuse."},
-
-    { title:"All The Colours", images:[
-      "https://static.wixstatic.com/media/d77542_2bb9bcae008c47d8a69226ecfeb7d3fb~mv2.jpg",
-      "https://static.wixstatic.com/media/d77542_021b62035b31438f93ef6106c213919a~mv2.jpg"
-    ], desc:"Palette subtile et vibrations colorées, parfaitement équilibrées."},
-
-    { title:"Aquatica", images:[
-      "https://static.wixstatic.com/media/d77542_673f871246e84abb98e51717dc1a9a6b~mv2.jpg",
-      "https://static.wixstatic.com/media/d77542_0c8a4697657c4e35b1c5ae923603c268~mv2.jpg"
-    ], desc:"Mouvements aqueux apaisants, graphisme fluide et chic intemporel."},
   ];
 
   const grid = document.getElementById('grid');
@@ -117,8 +74,7 @@
     a.addEventListener('click',e=>{
       e.preventDefault();
       sessionStorage.setItem('EW_PRODUCT', JSON.stringify({
-        collection: COLLECTION_NAME,
-        title: item.title, images: item.images, desc: item.desc
+        collection: COLLECTION_NAME, title: item.title, images: item.images, desc: item.desc
       }));
       location.href='product.html';
     });
@@ -127,16 +83,11 @@
     grid.appendChild(a);
   });
 
-  // Auto-resize iFrame (Wix)
-  function postH(){
-    try{
-      var h=Math.max(document.documentElement.scrollHeight,document.body?document.body.scrollHeight:0);
-      parent&&parent.postMessage({type:'EW_IFRAME_RESIZE',height:h},'*');
-    }catch(e){}
-  }
-  window.addEventListener('load',postH); window.addEventListener('resize',postH);
-  new (window.ResizeObserver||function(){return {observe:function(){}}})(postH).observe(document.documentElement);
-  setTimeout(postH,300); setTimeout(postH,1200);
+  // Auto-resize iFrame (Wix) throttlé
+  let rafId=0; function postH(){ if(rafId) return; rafId=requestAnimationFrame(()=>{rafId=0;try{var h=Math.max(document.documentElement.scrollHeight,document.body?document.body.scrollHeight:0);parent&&parent.postMessage({type:'EW_IFRAME_RESIZE',height:h},'*');}catch{}}); }
+  ['load','resize','orientationchange'].forEach(e=>window.addEventListener(e,postH,{passive:true}));
+  new (window.ResizeObserver||function(){return{observe(){}}})(postH).observe(document.documentElement);
+  setTimeout(postH,250); setTimeout(postH,1200);
 </script>
 </body>
 </html>
