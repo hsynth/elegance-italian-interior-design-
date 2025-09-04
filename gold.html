@@ -7,6 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 <style>
   html,body{margin:0;background:#f8f8f6;color:#111;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial}
+  body{padding-bottom:140px;}
   .container{max-width:1320px;margin:0 auto;padding:22px}
   .header{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin:10px 0 6px}
   h1{font-family:"Playfair Display",serif;font-weight:400;margin:0}
@@ -17,7 +18,6 @@
   .tile img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:14px;display:block;background:#f2f2f2}
   .tile h3{text-align:center;font-family:"Playfair Display",serif;font-weight:400;margin:10px 0 0}
   @media(min-width:900px){.tile{grid-column:span 6}}
-
   html, body { overscroll-behavior:none; overflow:visible; -webkit-tap-highlight-color:transparent; }
   @media(max-width:768px){ .grid{gap:16px} .tile img{aspect-ratio:3/2} .back{top:max(12px,env(safe-area-inset-top))} }
   img{content-visibility:auto;contain-intrinsic-size:800px 600px}
@@ -136,10 +136,24 @@
     grid.appendChild(a);
   });
 
-  let rafId=0; function postH(){ if(rafId) return; rafId=requestAnimationFrame(()=>{rafId=0;try{var h=Math.max(document.documentElement.scrollHeight,document.body?document.body.scrollHeight:0);parent&&parent.postMessage({type:'EW_IFRAME_RESIZE',height:h},'*');}catch{}}); }
-  ['load','resize','orientationchange'].forEach(e=>window.addEventListener(e,postH,{passive:true}));
-  new (window.ResizeObserver||function(){return{observe(){}}})(postH).observe(document.documentElement);
-  setTimeout(postH,250); setTimeout(postH,1200);
+  (function(){
+    let rafId=0;
+    const postH = () => {
+      if (rafId) return;
+      rafId = requestAnimationFrame(() => {
+        rafId = 0;
+        try {
+          const h = Math.max(document.documentElement.scrollHeight, document.body?document.body.scrollHeight:0);
+          parent && parent.postMessage({ type:'EW_IFRAME_RESIZE', height: h }, '*');
+        } catch {}
+      });
+    };
+    ['load','resize','orientationchange','scroll'].forEach(e=>window.addEventListener(e,postH,{passive:true}));
+    document.querySelectorAll('img').forEach(img=>img.addEventListener('load', postH, { once:true, passive:true }));
+    const mo = new MutationObserver(postH); mo.observe(document.body, { childList:true, subtree:true });
+    setTimeout(postH,200); setTimeout(postH,800); setTimeout(postH,1600);
+    document.documentElement.style.overflow='visible'; if(document.body) document.body.style.overflow='visible';
+  })();
 </script>
 </body>
 </html>
