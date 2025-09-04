@@ -1,174 +1,126 @@
 /* ========================
    Elegance Italian Interior Design
-   Papiers Peints - Style Minotti
+   Wallpapers — Minotti-inspired
+   (Tout est SCOPÉ sous #ew pour éviter les conflits)
    ======================== */
 
 #ew {
   --ink: #111;
-  --muted: #666;
-  --bg: #f8f8f6;
-  --line: #e0e0e0;
-  --header-h: 120px;
-  padding-top: var(--header-h);
-  background: var(--bg);
+  --muted: #6c6f73;
+  --bg: #f8f8f6;      /* blanc cassé chic */
+  --line: #e3e5e8;
+  --header-h: 120px;  /* ajuste-le si ton header Wix est plus haut/bas */
+  --gap: 28px;
   color: var(--ink);
-  font-family: "Inter", sans-serif;
+  background: var(--bg);
+  padding-top: var(--header-h);
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
 #ew * { box-sizing: border-box; }
-
-/* ---- Titles ---- */
+#ew .container { max-width: 1320px; margin: 0 auto; padding: 0 24px; }
+#ew .section { padding: 80px 0; }
+#ew .muted { color: var(--muted); }
 #ew h1, #ew h2, #ew h3 {
   font-family: "Playfair Display", serif;
-  font-weight: 400;
-  margin: 0 0 16px;
+  font-weight: 400; letter-spacing: .2px; margin: 0 0 10px;
 }
 
-#ew p { margin: 0 0 12px; }
-
-#ew .muted { color: var(--muted); }
-
-/* ---- Sections ---- */
-#ew .section {
-  padding: 80px 0;
-}
-
-#ew .container {
-  max-width: 1300px;
-  margin: 0 auto;
-  padding: 0 24px;
-}
-
-/* ---- Hero ---- */
-#ew .hero {
-  position: relative;
-  min-height: 90vh;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-}
+/* ---------- HERO (Landing) ---------- */
+#ew .hero { position: relative; min-height: 88vh; display: grid; place-items: end center; overflow: hidden; border-bottom: 1px solid var(--line); }
 #ew .hero::before {
-  content:"";
-  position:absolute;
-  inset:0;
-  background:url("https://static.wixstatic.com/media/d77542_1baa8f118c7a4423a7975b7536517123~mv2.jpg") center/cover no-repeat;
-  filter: brightness(.95) contrast(.98);
+  content: ""; position: absolute; inset: 0;
+  background: url('https://static.wixstatic.com/media/d77542_1baa8f118c7a4423a7975b7536517123~mv2.jpg') center/cover no-repeat;
+  filter: saturate(.92) contrast(.98) brightness(.96);
 }
 #ew .hero .overlay {
-  position:absolute;
-  inset:0;
-  background:linear-gradient(to top, rgba(248,248,246,1), rgba(248,248,246,0) 60%);
+  position: absolute; inset: auto 0 0 0; height: 42vh;
+  background: linear-gradient(180deg, rgba(248,248,246,0) 0%, #f8f8f6 85%);
 }
 
-/* ---- Collections ---- */
+/* ---------- GRID (Landing & Collections) ---------- */
 #ew .grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 32px;
+  display: grid; gap: var(--gap);
+  grid-template-columns: repeat(12, minmax(0,1fr));
 }
 #ew .card {
-  text-decoration:none;
-  color:inherit;
-  display:block;
+  grid-column: span 12;
+  text-decoration: none; color: inherit; background: #fff;
+  border: 1px solid var(--line); border-radius: 16px; overflow: hidden;
 }
+@media (min-width: 900px) { #ew .card { grid-column: span 4; } }
 #ew .card img {
-  width:100%;
-  aspect-ratio:4/3;
-  object-fit:cover;
-  display:block;
-  border-radius:12px;
-  transition: transform .6s ease;
+  width: 100%; height: 50vh; min-height: 320px; object-fit: cover; display: block;
+  transition: transform .8s cubic-bezier(.2,.7,.2,1), filter .6s ease; filter: saturate(.9);
 }
-#ew .card:hover img {
-  transform: scale(1.02);
+#ew .card:hover img { transform: scale(1.02); filter: saturate(1); }
+#ew .card footer {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 16px 18px; border-top: 1px solid var(--line); background: #fff;
 }
-#ew .card h3 {
-  margin-top:12px;
-  font-weight:400;
-  text-align:center;
-}
+#ew .chip { font-size: 12px; letter-spacing: .06em; padding: 6px 10px; border: 1px solid var(--line); border-radius: 999px; }
 
-/* ---- Collection Pages ---- */
+/* ---------- Collection pages ---------- */
+#ew .header-collection { display: flex; justify-content: space-between; align-items: end; gap: 18px; margin-bottom: 12px; }
+#ew .filters { display: flex; gap: 10px; flex-wrap: wrap; }
+#ew .filter { border: 1px solid var(--line); background: #fff; border-radius: 999px; padding: 8px 12px; font-size: 13px; text-decoration: none; color: var(--ink); }
+
 #ew .catalog {
-  display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(320px,1fr));
-  gap:28px;
+  display: grid; gap: var(--gap);
+  grid-template-columns: repeat(12, minmax(0,1fr));
 }
-#ew .tile img {
-  width:100%;
-  aspect-ratio:4/3;
-  object-fit:cover;
-  border-radius:12px;
-  display:block;
-}
-#ew .tile h3 {
-  margin-top:10px;
-  text-align:center;
-  font-weight:400;
-}
+#ew .tile { grid-column: span 12; text-decoration: none; color: inherit; }
+@media (min-width: 900px) { #ew .tile { grid-column: span 6; } } /* 2 colonnes pour look “galerie d’art” */
+#ew .tile img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; border-radius: 14px; }
+#ew .tile h3 { text-align: center; font-weight: 400; margin-top: 12px; }
 
-/* ---- Product ---- */
-#ew .product {
-  padding:80px 0;
-}
-#ew .wrap {
-  display:grid;
-  grid-template-columns: 2fr 1fr;
-  gap:48px;
-}
-@media(max-width:1000px){#ew .wrap{grid-template-columns:1fr;}}
-#ew .viewer img {
-  width:100%;
-  border-radius:12px;
-  object-fit:cover;
-}
-#ew .thumbs {
-  display:flex;
-  gap:10px;
-  margin-top:12px;
-}
+/* ---------- Product page ---------- */
+#ew .product { padding: 80px 0; }
+#ew .product-wrap { display: grid; grid-template-columns: 2fr 1fr; gap: 48px; align-items: start; }
+@media (max-width: 1000px) { #ew .product-wrap { grid-template-columns: 1fr; } }
+
+#ew .product-gallery img { width: 100%; border-radius: 14px; object-fit: cover; max-height: 80vh; display: block; background: #f2f2f2; }
+#ew .thumbs { display: flex; gap: 12px; margin-top: 16px; overflow-x: auto; padding-bottom: 6px; }
 #ew .thumbs img {
-  width:90px;
-  height:90px;
-  object-fit:cover;
-  border-radius:8px;
-  cursor:pointer;
-  border:1px solid var(--line);
+  width: 96px; height: 96px; object-fit: cover; border-radius: 8px; cursor: pointer;
+  border: 1px solid var(--line); opacity: .75; transition: opacity .25s;
 }
-#ew .info h1 { font-weight:400; font-size:32px; }
-#ew .textures { display:flex; gap:10px; margin-top:16px; }
-#ew .tex {
-  width:60px; height:60px;
-  border-radius:6px;
-  border:1px solid var(--line);
-  background-size:cover;
-  background-position:center;
-  cursor:pointer;
-}
+#ew .thumbs img.active, #ew .thumbs img:hover { opacity: 1; }
 
-/* ---- Configurator ---- */
-#ew .config { background:#f0f0ee; padding:80px 0; }
-#ew .config .wrap {
-  display:grid;
-  grid-template-columns: 1fr 2fr;
-  gap:32px;
+#ew .product-info h1 { font-family: "Playfair Display", serif; font-weight: 400; font-size: 36px; margin: 0 0 8px; }
+#ew .product-info .collection { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 18px; }
+#ew .product-info p.desc { font-size: 16px; line-height: 1.6; margin: 0 0 20px; }
+
+#ew .textures { display: flex; gap: 12px; flex-wrap: wrap; }
+#ew .tex {
+  width: 64px; height: 64px; border-radius: 8px; border: 1px solid var(--line);
+  background-size: cover; background-position: center; cursor: pointer; opacity: .85; transition: opacity .25s, border-color .25s;
 }
-@media(max-width:1000px){#ew .config .wrap{grid-template-columns:1fr;}}
+#ew .tex:hover, #ew .tex.active { opacity: 1; border-color: #111; }
+
+#ew .cta { margin-top: 32px; display: flex; gap: 10px; flex-wrap: wrap; }
+#ew .btn {
+  appearance: none; background: #111; color: #fff; border: none; border-radius: 999px;
+  padding: 12px 18px; font-size: 14px; cursor: pointer; transition: background .25s;
+}
+#ew .btn.ghost { background: #fff; color: #111; border: 1px solid #111; }
+#ew .btn:hover { background: #333; }
+#ew .btn.ghost:hover { background: #111; color: #fff; }
+
+/* ---------- Configurator 3D ---------- */
+#ew .config { border-top: 1px solid var(--line); background: #f1f1ef; }
+#ew .config .wrap { display: grid; grid-template-columns: 1fr 2fr; gap: 24px; }
+@media (max-width: 1000px) { #ew .config .wrap { grid-template-columns: 1fr; } }
 #ew .panel {
-  background:#fff;
-  border:1px solid var(--line);
-  border-radius:12px;
-  padding:20px;
+  background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 16px;
 }
-#ew .panel label { display:block; font-size:13px; color:var(--muted); margin:14px 0 6px; }
-#ew .panel input, #ew .panel button {
-  width:100%;
-  padding:10px;
-  margin-bottom:8px;
+#ew .panel label { display: block; font-size: 12px; color: var(--muted); margin: 12px 0 6px; text-transform: uppercase; letter-spacing: .06em; }
+#ew .panel input[type=file], #ew .panel input[type=range], #ew .panel input[type=number] {
+  width: 100%; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; background: #fff;
 }
-#ew .stage3d {
-  border:1px solid var(--line);
-  border-radius:12px;
-  background:#fff;
-  height:500px;
-}
+#ew .panel .row { display: flex; gap: 10px; }
+#ew .panel .row > * { flex: 1; }
+
+#ew .stage3d { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 10px; }
+#ew #stage3d { height: 520px; border-radius: 10px; overflow: hidden; background: #f3f3f3; position: relative; }
+#ew .hint { position: absolute; right: 10px; bottom: 10px; font-size: 12px; background: rgba(255,255,255,.9); border: 1px solid var(--line); border-radius: 999px; padding: 6px 10px; }
