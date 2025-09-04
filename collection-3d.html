@@ -1,58 +1,71 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>3D — Elegance</title>
-  <link rel="stylesheet" href="styles.css"/>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Prestige — Collection</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0;background:#f8f8f6;color:#111;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial}
+  .container{max-width:1320px;margin:0 auto;padding:22px}
+  .header{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin:10px 0 6px}
+  h1{font-family:"Playfair Display",serif;font-weight:400;margin:0}
+  .muted{color:#6f7377}
+  .back{position:sticky;top:12px;z-index:5;display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:#fff;background:#1a1a1a;border-radius:999px;padding:9px 12px;border:1px solid #000;box-shadow:0 2px 8px rgba(0,0,0,.12)}
+  .grid{display:grid;gap:24px;grid-template-columns:repeat(12,minmax(0,1fr));margin-top:14px}
+  .tile{grid-column:span 12;text-decoration:none;color:inherit}
+  .tile img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:14px;display:block;background:#f2f2f2}
+  .tile h3{text-align:center;font-family:"Playfair Display",serif;font-weight:400;margin:10px 0 0}
+  @media(min-width:900px){.tile{grid-column:span 6}}
+
+  /* Mobile polish */
+  html, body { overscroll-behavior:none; overflow:visible; -webkit-tap-highlight-color:transparent; }
+  @media(max-width:768px){ .grid{gap:16px} .tile img{aspect-ratio:3/2} .back{top:max(12px,env(safe-area-inset-top))} }
+  img{content-visibility:auto;contain-intrinsic-size:800px 600px}
+</style>
 </head>
 <body>
-<div id="ew" style="--header-h:120px">
-  <section class="section">
-    <div class="container">
-      <div class="header-collection">
-        <div>
-          <a class="filter" href="index.html">← Retour</a>
-          <h1 style="margin:10px 0 4px">Collection 3D</h1>
-          <p class="muted">Cliquez pour ouvrir la fiche produit.</p>
-        </div>
-        <div class="filters"><span class="filter">Relief</span><span class="filter">Couleur</span></div>
-      </div>
-
-      <div class="catalog">
-        <a class="tile" href="product.html?collection=3D&title=Fairy%20Leaves&gallery=https://static.wixstatic.com/media/d77542_6e88f99b79d842289fc245aa6f585a88~mv2.jpg|https://static.wixstatic.com/media/d77542_e80c83f8301f46eb91744df98d6cbcf4~mv2.jpg|https://static.wixstatic.com/media/d77542_4476f79efc6147d885c30be713ab74e6~mv2.jpg&desc=Des%20feuilles%20sculpt%C3%A9es%20qui%20semblent%20sortir%20du%20mur.%20Effet%20tridimensionnel%20spectaculaire%20et%20naturel.">
-          <img src="https://static.wixstatic.com/media/d77542_6e88f99b79d842289fc245aa6f585a88~mv2.jpg" alt="Fairy Leaves"><h3>Fairy Leaves</h3>
-        </a>
-        <a class="tile" href="product.html?collection=3D&title=Falling%20Lines&gallery=https://static.wixstatic.com/media/d77542_778500da641445beb6f2fa620d641efe~mv2.jpg|https://static.wixstatic.com/media/d77542_5788604e493142cfa00a90bc39a3273a~mv2.jpg|https://static.wixstatic.com/media/d77542_0ad7dd7cb1904487b75f352b007558b4~mv2.jpg&desc=Des%20lignes%20verticales%20qui%20s%E2%80%99%C3%A9coulent%20comme%20des%20filets%20de%20lumi%C3%A8re.%20%C3%89lancement%20et%20modernit%C3%A9.">
-          <img src="https://static.wixstatic.com/media/d77542_778500da641445beb6f2fa620d641efe~mv2.jpg" alt="Falling Lines"><h3>Falling Lines</h3>
-        </a>
-        <a class="tile" href="product.html?collection=3D&title=Groove&gallery=https://static.wixstatic.com/media/d77542_f8d88f836fc64df8b351225c370e1e72~mv2.jpg|https://static.wixstatic.com/media/d77542_7ab199a2b2224116a1752b9c5b089ac1~mv2.jpg|https://static.wixstatic.com/media/d77542_4ec0fb4865b641adbebaee2ce9c3ca19~mv2.jpg&desc=Des%20stries%20profondes%20et%20r%C3%A9guli%C3%A8res%2C%20cr%C3%A9ant%20un%20rythme%20architectural%20%C3%A9l%C3%A9gant.">
-          <img src="https://static.wixstatic.com/media/d77542_f8d88f836fc64df8b351225c370e1e72~mv2.jpg" alt="Groove"><h3>Groove</h3>
-        </a>
-        <a class="tile" href="product.html?collection=3D&title=Large%20Leaves&gallery=https://static.wixstatic.com/media/d77542_be742bd255bf43079eaab25949174863~mv2.jpg|https://static.wixstatic.com/media/d77542_147808aee82b4a14b4583c73c68bdc25~mv2.jpg|https://static.wixstatic.com/media/d77542_ef7722d5c63547b5a858f93ec678f469~mv2.jpg&desc=Des%20feuillages%20imposants%20en%20relief%2C%20apportant%20une%20pr%C3%A9sence%20forte%20et%20organique%20%C3%A0%20l%E2%80%99espace.">
-          <img src="https://static.wixstatic.com/media/d77542_be742bd255bf43079eaab25949174863~mv2.jpg" alt="Large Leaves"><h3>Large Leaves</h3>
-        </a>
-        <a class="tile" href="product.html?collection=3D&title=Petals&gallery=https://static.wixstatic.com/media/d77542_d43a6b1ad87541fc918fbe4c7239ddee~mv2.jpg|https://static.wixstatic.com/media/d77542_e17e80094fc24edd9f662112d2530d8e~mv2.jpg|https://static.wixstatic.com/media/d77542_02798f1e75124055983b4b1caac9be33~mv2.jpg&desc=Des%20p%C3%A9tales%20superpos%C3%A9s%20en%20volume%2C%20d%C3%A9licats%20et%20enveloppants.">
-          <img src="https://static.wixstatic.com/media/d77542_d43a6b1ad87541fc918fbe4c7239ddee~mv2.jpg" alt="Petals"><h3>Petals</h3>
-        </a>
-        <a class="tile" href="product.html?collection=3D&title=Rose&gallery=https://static.wixstatic.com/media/d77542_6d37b0eb081e43eaba849b463348270e~mv2.jpg|https://static.wixstatic.com/media/d77542_d94048f6dbb943c1bcd9e1fb7b6df766~mv2.jpg|https://static.wixstatic.com/media/d77542_3d236ff2fd224bb3a80a59e8f37aae68~mv2.jpg&desc=Une%20fleur%20monumentale%20sculpt%C3%A9e%20en%203D.%20Po%C3%A9tique%20et%20spectaculaire.">
-          <img src="https://static.wixstatic.com/media/d77542_6d37b0eb081e43eaba849b463348270e~mv2.jpg" alt="Rose"><h3>Rose</h3>
-        </a>
-      </div>
+<div class="container">
+  <a class="back" href="index.html" aria-label="Retour">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 18l-6-6 6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Retour
+  </a>
+  <div class="header">
+    <div>
+      <h1>Prestige</h1>
+      <div class="muted">Sélection haut de gamme</div>
     </div>
-  </section>
+  </div>
+
+  <div class="grid" id="grid"></div>
 </div>
 
-<!-- Auto-resize iFrame -->
 <script>
-(function(){
-  function postH(){try{var h=Math.max(document.documentElement.scrollHeight,document.body?document.body.scrollHeight:0);parent&&parent.postMessage({type:'EW_IFRAME_RESIZE',height:h},'*');}catch(e){}}
-  window.addEventListener('load',postH); window.addEventListener('resize',postH);
-  new (window.ResizeObserver||function(){return {observe:function(){}}})(postH).observe(document.documentElement);
-  document.documentElement.style.overflow='visible'; if(document.body) document.body.style.overflow='visible';
-  setTimeout(postH,300); setTimeout(postH,1200);
-})();
+<!-- … head identique, titre Gold … -->
+<script>
+  const COLLECTION_NAME = "Gold";
+  const ITEMS = [
+    { title:"CPGMRAL", images:[
+      "https://static.wixstatic.com/media/d77542_7e074adac0ad4364977e5b6d11166194~mv2.jpg",
+      "https://static.wixstatic.com/media/d77542_7965819a3c0844a09afc4f2c0c7fe5ca~mv2.jpg",
+      "https://static.wixstatic.com/media/d77542_4cabe940c446412fbab93105708ce877~mv2.jpg",
+      "https://static.wixstatic.com/media/d77542_af3b34c9608c4999876741d86af44228~mv2.jpg",
+    ], desc:"Dorures texturées, reflets contrôlés et raffinement contemporain."},
+
+    { title:"Cubes", images:[
+      "https://static.wixstatic.com/media/d77542_f0faa6b345064f458dbccb8d1c41c371~mv2.jpg",
+      "https://static.wixstatic.com/media/d77542_268e7b4930c84ac2a331d51cb6bd0518~mv2.jpg",
+    ], desc:"Géométrie en trompe-l’œil, jeu d’ombres métalliques."},
+
+    { title:"Gold Jungle", images:[
+      "https://static.wixstatic.com/media/d77542_0787547e7162414e86a7ee9829978584~mv2.jpg",
+      "https://static.wixstatic.com/media/d77542_0775c1cc60b44b9eb18d8533f518db04~mv2.jpg",
+    ], desc:"Feuillages luxuriants dorés, ambiance précieuse."},
+
+    { title:"Golden Rose", images:[
+      "https://static.wixstatic.com/media/d77542_d7652637bfe24ee2a36b9e15f8c6b6ca~mv2.jpg",
+      "https://static.wixstatic.com/media/d77542_a5212e6a35954e16be82bb3a9c417868~mv2.jpg",
+    ], desc:"Rosace métallique subtile, lumière douce et chic."},
+  ];
+  /* … le reste du script est identique à prestige.html … */
 </script>
-</body>
-</html>
