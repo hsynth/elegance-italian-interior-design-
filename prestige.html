@@ -18,7 +18,6 @@
   .tile h3{text-align:center;font-family:"Playfair Display",serif;font-weight:400;margin:10px 0 0}
   @media(min-width:900px){.tile{grid-column:span 6}}
 
-  /* Mobile polish */
   html, body { overscroll-behavior:none; overflow:visible; -webkit-tap-highlight-color:transparent; }
   @media(max-width:768px){ .grid{gap:16px} .tile img{aspect-ratio:3/2} .back{top:max(12px,env(safe-area-inset-top))} }
   img{content-visibility:auto;contain-intrinsic-size:800px 600px}
@@ -42,7 +41,6 @@
 
 <script>
   const COLLECTION_NAME = "Prestige";
-  /* === ÉCHANTILLON — Ajoute d’autres modèles en copiant ce format === */
   const ITEMS = [
     { title:"Borderless", images:[
       "https://static.wixstatic.com/media/d77542_78b3ccb5edcc4753aa77c50c39b5291e~mv2.jpg",
@@ -83,7 +81,7 @@
     grid.appendChild(a);
   });
 
-  // Auto-resize iFrame (Wix) throttlé
+  // iFrame auto-height
   let rafId=0; function postH(){ if(rafId) return; rafId=requestAnimationFrame(()=>{rafId=0;try{var h=Math.max(document.documentElement.scrollHeight,document.body?document.body.scrollHeight:0);parent&&parent.postMessage({type:'EW_IFRAME_RESIZE',height:h},'*');}catch{}}); }
   ['load','resize','orientationchange'].forEach(e=>window.addEventListener(e,postH,{passive:true}));
   new (window.ResizeObserver||function(){return{observe(){}}})(postH).observe(document.documentElement);
