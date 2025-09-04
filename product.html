@@ -1,72 +1,106 @@
-<!DOCTYPE html><html lang="fr"><head>
-<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Produit — Détail</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
-</head><body>
-<div id="ew" style="--header-h:120px">
-  <section class="product"><div class="container">
-    <div class="breadcrumb text"><a href="index.html">Collections</a> › <a id="bc-collection" href="#">—</a> › <span id="bc-title">—</span></div>
-    <div class="wrap">
-      <div class="viewer">
-        <div class="main"><img id="mainImg" src="" alt="Produit"></div>
-        <div class="thumbs" id="thumbs"></div>
-      </div>
-      <aside class="info">
-        <div class="box">
-          <h1 id="title">—</h1>
-          <div class="kv text">
-            <div><strong>Collection</strong><br><span id="collectionName">—</span></div>
-            <div><strong>Code</strong><br><span id="code">—</span></div>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Produit — Détail</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="ew" style="--header-h:120px">
+    <section class="product">
+      <div class="container">
+        <div class="breadcrumb text"><a href="index.html">Collections</a> › <a id="bc-collection" href="#">—</a> › <span id="bc-title">—</span></div>
+
+        <div class="wrap">
+          <!-- Grand visuel -->
+          <div class="viewer">
+            <div class="main"><img id="mainImg" src="" alt="Produit"></div>
+            <div class="thumbs" id="thumbs"></div>
           </div>
-          <p class="muted text" id="dims">Dimensions variables</p>
-          <div class="desc text" id="desc">—</div>
-          <div class="textures">
-            <h4 class="text">Textures & variantes</h4>
-            <div class="tex-row" id="textures"></div>
-          </div>
-          <div class="linkrow">
-            <a id="tech" href="#" target="_blank" rel="noreferrer">Fiche technique</a>
-            <a id="infos" href="#" target="_blank" rel="noreferrer">Infos utiles</a>
-            <a href="mailto:contact@elegance-design.fr?subject=Demande%20devis%20papier%20peint">Demander un devis</a>
-          </div>
+
+          <!-- Colonne droite -->
+          <aside class="info">
+            <div class="box">
+              <h1 id="title">—</h1>
+              <div class="kv text">
+                <div><strong>Collection</strong><br><span id="collectionName">—</span></div>
+                <div><strong>Code</strong><br><span id="code">—</span></div>
+              </div>
+              <p class="muted text" id="dims">Dimensions variables</p>
+
+              <div class="desc text" id="desc">
+                —
+              </div>
+
+              <div class="textures">
+                <h4 class="text">Textures & variantes</h4>
+                <div class="tex-row" id="textures"></div>
+              </div>
+
+              <div class="linkrow">
+                <a id="tech" href="#" target="_blank" rel="noreferrer">Fiche technique</a>
+                <a id="infos" href="#" target="_blank" rel="noreferrer">Infos utiles</a>
+                <a href="mailto:contact@elegance-design.fr?subject=Demande%20devis%20papier%20peint">Demander un devis</a>
+              </div>
+            </div>
+          </aside>
         </div>
-      </aside>
-    </div>
-  </div></section>
-</div>
+      </div>
+    </section>
+  </div>
 
-<script>
-(function(){
-  const p=new URLSearchParams(location.search);
-  const title=p.get('title')||'Modèle';
-  const collection=p.get('collection')||'Collection';
-  const code=p.get('code')||title.replace(/\s+/g,'').toUpperCase();
-  const dims=p.get('dims')||'Dimensions variables';
-  const gallery=(p.get('gallery')||'').split('|').filter(Boolean);
-  const desc=p.get('desc')||`${title} – une composition raffinée issue de la collection ${collection}. Motif haute définition sur support premium. Texture, raccord et échelle ajustables sur mesure.`;
+  <script>
+    (function(){
+      const p = new URLSearchParams(window.location.search);
+      const title = p.get('title') || 'Modèle';
+      const collection = p.get('collection') || 'Collection';
+      const code = p.get('code') || title.replace(/\s+/g,'').toUpperCase();
+      const dims = p.get('dims') || 'Dimensions variables';
+      const gallery = (p.get('gallery') || '').split('|').filter(Boolean);
+      const desc = p.get('desc') || `${title} — issu de la collection ${collection}. Impression HD sur support premium. Échelle et texture personnalisables, pour un rendu parfaitement adapté à votre espace.`;
 
-  const root=document.getElementById('ew');
-  root.querySelector('#title').textContent=title;
-  root.querySelector('#collectionName').textContent=collection;
-  root.querySelector('#code').textContent=code;
-  root.querySelector('#dims').textContent=dims;
-  root.querySelector('#desc').textContent=desc;
-  root.querySelector('#bc-title').textContent=title;
-  const bc=root.querySelector('#bc-collection'); bc.textContent=collection;
-  bc.href=collection.toLowerCase()==='gold'?'gold.html':(collection.toLowerCase()==='3d'?'collection-3d.html':'prestige.html');
+      const $ = s => document.querySelector(s);
+      $('#title').textContent = title;
+      $('#collectionName').textContent = collection;
+      $('#code').textContent = code;
+      $('#dims').textContent = dims;
+      $('#desc').textContent = desc;
+      $('#bc-title').textContent = title;
+      const bc = $('#bc-collection'); bc.textContent = collection;
+      bc.href = collection.toLowerCase()==='gold' ? 'gold.html' : (collection.toLowerCase()==='3d' ? 'collection-3d.html' : 'prestige.html');
 
-  const main=root.querySelector('#mainImg');
-  const thumbs=root.querySelector('#thumbs');
-  const textures=root.querySelector('#textures');
+      const main = document.getElementById('mainImg');
+      const thumbs = document.getElementById('thumbs');
+      const textures = document.getElementById('textures');
 
-  function addThumb(src){const im=document.createElement('img');im.src=src;im.alt=title;im.addEventListener('click',()=>{main.src=src});thumbs.appendChild(im);}
-  function addTex(src){const d=document.createElement('div');d.className='tex';d.style.backgroundImage=`url(${src})`;d.title='Variante';d.addEventListener('click',()=>{main.src=src});textures.appendChild(d);}
+      function addThumb(src){
+        const im = new Image();
+        im.src = src; im.alt = title;
+        im.addEventListener('click', ()=> main.src = src);
+        thumbs.appendChild(im);
+      }
+      function addTexture(src){
+        const d = document.createElement('div');
+        d.className='tex';
+        d.style.backgroundImage = `url(${src})`;
+        d.title='Variante';
+        d.addEventListener('click', ()=> main.src = src);
+        textures.appendChild(d);
+      }
 
-  if(gallery.length){main.src=gallery[0];gallery.forEach(src=>{addThumb(src);addTex(src);});}
-  else{main.src='https://via.placeholder.com/1200x900?text=Image+produit';}
+      if(gallery.length){
+        main.src = gallery[0];
+        gallery.forEach((src)=>{ addThumb(src); addTexture(src); });
+      } else {
+        main.src = 'https://via.placeholder.com/1200x900?text=Image+produit';
+      }
 
-  root.querySelector('#tech').href=main.src; root.querySelector('#infos').href=main.src;
-})();
-</script>
-</body></html>
+      // liens factices -> tu pourras les remplacer par des PDF réels
+      document.getElementById('tech').href = main.src;
+      document.getElementById('infos').href = main.src;
+    })();
+  </script>
+</body>
+</html>
