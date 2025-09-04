@@ -9,6 +9,13 @@
 </head>
 <body>
 <div id="ew" style="--header-h:120px">
+  <div class="container" style="position:relative;margin-top:12px">
+    <a class="back" href="javascript:history.back()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 18l-6-6 6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Retour
+    </a>
+  </div>
+
   <section class="product">
     <div class="container">
       <div class="product-wrap">
@@ -25,6 +32,7 @@
           <div class="textures" id="textures"></div>
 
           <div class="cta">
+            <button class="btn ghost" id="tech">Fiche technique</button>
             <a class="btn" href="mailto:contact@elegance-design.fr?subject=Demande%20devis%20papier%20peint">Demander un devis</a>
             <a class="btn ghost" id="dlimg" href="#" target="_blank" rel="noreferrer">Télécharger l’image</a>
           </div>
@@ -34,13 +42,42 @@
   </section>
 </div>
 
+<!-- Modal fiche technique -->
+<div class="modal" id="modalTech" aria-hidden="true">
+  <div class="sheet" role="dialog" aria-modal="true">
+    <div class="head">
+      <h3 style="font-family:'Playfair Display',serif;font-weight:400;margin:0">Caractéristiques techniques</h3>
+      <button class="btn ghost" id="closeTech">Fermer</button>
+    </div>
+    <div class="grid4">
+      <div class="tech">
+        <img src="https://img.icons8.com/ios-glyphs/90/pencil--v1.png" alt="">
+        <div>100% personnalisable</div>
+      </div>
+      <div class="tech">
+        <img src="https://img.icons8.com/ios-glyphs/90/badge.png" alt="">
+        <div>Certification wallpaper</div>
+      </div>
+      <div class="tech">
+        <img src="https://img.icons8.com/ios-glyphs/90/leaf.png" alt="">
+        <div>Encres éco-certifiées</div>
+      </div>
+      <div class="tech">
+        <img src="https://img.icons8.com/ios-glyphs/90/high-definition.png" alt="">
+        <div>Impression HD</div>
+      </div>
+    </div>
+    <div style="padding:10px 0 6px" class="muted">Fibre non tissée – lessivable – anti-feu – pose aisée.</div>
+  </div>
+</div>
+
 <script>
 (function(){
   const p = new URLSearchParams(location.search);
   const title = p.get("title") || "Produit";
   const collection = p.get("collection") || "Collection";
   const gallery = (p.get("gallery") || "").split("|").filter(Boolean);
-  const desc = p.get("desc") || (title+" — une composition raffinée issue de la collection "+collection+".");
+  const desc = decodeURIComponent(p.get("desc")||"").trim() || (title+" — une composition raffinée issue de la collection "+collection+".");
 
   document.getElementById("title").textContent = title;
   document.getElementById("collectionName").textContent = collection;
@@ -66,20 +103,20 @@
     main.src = 'https://via.placeholder.com/1200x900?text=Image%20produit';
     dl.href = main.src;
   }
+
+  // Modal technique
+  const modal = document.getElementById('modalTech');
+  document.getElementById('tech').addEventListener('click', ()=>{ modal.classList.add('open'); });
+  document.getElementById('closeTech').addEventListener('click', ()=>{ modal.classList.remove('open'); });
+  modal.addEventListener('click', (e)=>{ if(e.target===modal) modal.classList.remove('open'); });
 })();
 </script>
 
 <!-- Auto-resize iFrame (Wix) -->
 <script>
 (function(){
-  function postH(){
-    try{
-      var h=Math.max(document.documentElement.scrollHeight,document.body?document.body.scrollHeight:0);
-      parent&&parent.postMessage({type:'EW_IFRAME_RESIZE',height:h},'*');
-    }catch(e){}
-  }
-  window.addEventListener('load',postH);
-  window.addEventListener('resize',postH);
+  function postH(){try{var h=Math.max(document.documentElement.scrollHeight,document.body?document.body.scrollHeight:0);parent&&parent.postMessage({type:'EW_IFRAME_RESIZE',height:h},'*');}catch(e){}}
+  window.addEventListener('load',postH); window.addEventListener('resize',postH);
   new (window.ResizeObserver||function(){return {observe:function(){}}})(postH).observe(document.documentElement);
   document.documentElement.style.overflow='visible'; if(document.body) document.body.style.overflow='visible';
   setTimeout(postH,300); setTimeout(postH,1200);
