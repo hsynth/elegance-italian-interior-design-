@@ -1,126 +1,181 @@
-/* ========================
-   Elegance Italian Interior Design
-   Wallpapers — Minotti-inspired
-   (Tout est SCOPÉ sous #ew pour éviter les conflits)
-   ======================== */
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Elegance — Papiers Peints</title>
+  <link rel="stylesheet" href="styles.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+</head>
+<body>
+<div id="ew" style="--header-h:120px">
 
-#ew {
-  --ink: #111;
-  --muted: #6c6f73;
-  --bg: #f8f8f6;      /* blanc cassé chic */
-  --line: #e3e5e8;
-  --header-h: 120px;  /* ajuste-le si ton header Wix est plus haut/bas */
-  --gap: 28px;
-  color: var(--ink);
-  background: var(--bg);
-  padding-top: var(--header-h);
-  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-}
+  <!-- HERO -->
+  <section class="hero">
+    <div class="overlay"></div>
+  </section>
 
-#ew * { box-sizing: border-box; }
-#ew .container { max-width: 1320px; margin: 0 auto; padding: 0 24px; }
-#ew .section { padding: 80px 0; }
-#ew .muted { color: var(--muted); }
-#ew h1, #ew h2, #ew h3 {
-  font-family: "Playfair Display", serif;
-  font-weight: 400; letter-spacing: .2px; margin: 0 0 10px;
-}
+  <!-- Collections -->
+  <section class="section">
+    <div class="container">
+      <div style="text-align:center;margin-bottom:26px">
+        <h1>Nos Collections</h1>
+        <p class="muted">Prestige · 3D · Gold</p>
+      </div>
+      <div class="grid">
+        <a class="card" href="prestige.html">
+          <img alt="Prestige" src="https://static.wixstatic.com/media/d77542_fe3d4bf7270746ca91adab75028f8e96~mv2.png">
+          <footer><h3>Prestige</h3><span class="chip">Découvrir</span></footer>
+        </a>
+        <a class="card" href="collection-3d.html">
+          <img alt="3D" src="https://static.wixstatic.com/media/d77542_50d7633186c141a79a57e2549d69c278~mv2.png">
+          <footer><h3>3D</h3><span class="chip">Découvrir</span></footer>
+        </a>
+        <a class="card" href="gold.html">
+          <img alt="Gold" src="https://static.wixstatic.com/media/d77542_74d9f4d77e5a44819123f2b70d71030b~mv2.png">
+          <footer><h3>Gold</h3><span class="chip">Découvrir</span></footer>
+        </a>
+      </div>
+    </div>
+  </section>
 
-/* ---------- HERO (Landing) ---------- */
-#ew .hero { position: relative; min-height: 88vh; display: grid; place-items: end center; overflow: hidden; border-bottom: 1px solid var(--line); }
-#ew .hero::before {
-  content: ""; position: absolute; inset: 0;
-  background: url('https://static.wixstatic.com/media/d77542_1baa8f118c7a4423a7975b7536517123~mv2.jpg') center/cover no-repeat;
-  filter: saturate(.92) contrast(.98) brightness(.96);
-}
-#ew .hero .overlay {
-  position: absolute; inset: auto 0 0 0; height: 42vh;
-  background: linear-gradient(180deg, rgba(248,248,246,0) 0%, #f8f8f6 85%);
-}
+  <!-- Configurateur 3D -->
+  <section class="section config" id="configurateur">
+    <div class="container">
+      <div style="text-align:center;margin-bottom:24px">
+        <h2>Configurateur personnalisé</h2>
+        <p class="muted">Importez votre motif, ajustez l’échelle/rotation/offset et visualisez-le sur un mur 3D.</p>
+      </div>
 
-/* ---------- GRID (Landing & Collections) ---------- */
-#ew .grid {
-  display: grid; gap: var(--gap);
-  grid-template-columns: repeat(12, minmax(0,1fr));
-}
-#ew .card {
-  grid-column: span 12;
-  text-decoration: none; color: inherit; background: #fff;
-  border: 1px solid var(--line); border-radius: 16px; overflow: hidden;
-}
-@media (min-width: 900px) { #ew .card { grid-column: span 4; } }
-#ew .card img {
-  width: 100%; height: 50vh; min-height: 320px; object-fit: cover; display: block;
-  transition: transform .8s cubic-bezier(.2,.7,.2,1), filter .6s ease; filter: saturate(.9);
-}
-#ew .card:hover img { transform: scale(1.02); filter: saturate(1); }
-#ew .card footer {
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 16px 18px; border-top: 1px solid var(--line); background: #fff;
-}
-#ew .chip { font-size: 12px; letter-spacing: .06em; padding: 6px 10px; border: 1px solid var(--line); border-radius: 999px; }
+      <div class="wrap">
+        <div class="panel">
+          <label for="fileInput">Image du motif</label>
+          <input id="fileInput" type="file" accept="image/*"/>
 
-/* ---------- Collection pages ---------- */
-#ew .header-collection { display: flex; justify-content: space-between; align-items: end; gap: 18px; margin-bottom: 12px; }
-#ew .filters { display: flex; gap: 10px; flex-wrap: wrap; }
-#ew .filter { border: 1px solid var(--line); background: #fff; border-radius: 999px; padding: 8px 12px; font-size: 13px; text-decoration: none; color: var(--ink); }
+          <label for="scale">Échelle</label>
+          <input type="range" id="scale" min="0.5" max="3" step="0.05" value="1"/>
 
-#ew .catalog {
-  display: grid; gap: var(--gap);
-  grid-template-columns: repeat(12, minmax(0,1fr));
-}
-#ew .tile { grid-column: span 12; text-decoration: none; color: inherit; }
-@media (min-width: 900px) { #ew .tile { grid-column: span 6; } } /* 2 colonnes pour look “galerie d’art” */
-#ew .tile img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; border-radius: 14px; }
-#ew .tile h3 { text-align: center; font-weight: 400; margin-top: 12px; }
+          <label for="rotation">Rotation</label>
+          <input type="range" id="rotation" min="0" max="360" step="1" value="0"/>
 
-/* ---------- Product page ---------- */
-#ew .product { padding: 80px 0; }
-#ew .product-wrap { display: grid; grid-template-columns: 2fr 1fr; gap: 48px; align-items: start; }
-@media (max-width: 1000px) { #ew .product-wrap { grid-template-columns: 1fr; } }
+          <div class="row">
+            <div>
+              <label for="offx">Décalage X</label>
+              <input type="number" id="offx" step="0.05" value="0"/>
+            </div>
+            <div>
+              <label for="offy">Décalage Y</label>
+              <input type="number" id="offy" step="0.05" value="0"/>
+            </div>
+          </div>
 
-#ew .product-gallery img { width: 100%; border-radius: 14px; object-fit: cover; max-height: 80vh; display: block; background: #f2f2f2; }
-#ew .thumbs { display: flex; gap: 12px; margin-top: 16px; overflow-x: auto; padding-bottom: 6px; }
-#ew .thumbs img {
-  width: 96px; height: 96px; object-fit: cover; border-radius: 8px; cursor: pointer;
-  border: 1px solid var(--line); opacity: .75; transition: opacity .25s;
-}
-#ew .thumbs img.active, #ew .thumbs img:hover { opacity: 1; }
+          <div class="row" style="margin-top:10px">
+            <button class="btn ghost" id="reset">Réinitialiser</button>
+            <button class="btn" id="download">Télécharger l’aperçu</button>
+          </div>
+        </div>
 
-#ew .product-info h1 { font-family: "Playfair Display", serif; font-weight: 400; font-size: 36px; margin: 0 0 8px; }
-#ew .product-info .collection { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 18px; }
-#ew .product-info p.desc { font-size: 16px; line-height: 1.6; margin: 0 0 20px; }
+        <div class="stage3d">
+          <div id="stage3d"></div>
+          <div class="hint">Souris : orbiter · molette : zoom</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-#ew .textures { display: flex; gap: 12px; flex-wrap: wrap; }
-#ew .tex {
-  width: 64px; height: 64px; border-radius: 8px; border: 1px solid var(--line);
-  background-size: cover; background-position: center; cursor: pointer; opacity: .85; transition: opacity .25s, border-color .25s;
-}
-#ew .tex:hover, #ew .tex.active { opacity: 1; border-color: #111; }
+</div>
 
-#ew .cta { margin-top: 32px; display: flex; gap: 10px; flex-wrap: wrap; }
-#ew .btn {
-  appearance: none; background: #111; color: #fff; border: none; border-radius: 999px;
-  padding: 12px 18px; font-size: 14px; cursor: pointer; transition: background .25s;
-}
-#ew .btn.ghost { background: #fff; color: #111; border: 1px solid #111; }
-#ew .btn:hover { background: #333; }
-#ew .btn.ghost:hover { background: #111; color: #fff; }
+<!-- Three.js (module) -->
+<script type="module">
+  import * as THREE from 'https://unpkg.com/three@0.161.0/build/three.module.js';
+  import { OrbitControls } from 'https://unpkg.com/three@0.161.0/examples/jsm/controls/OrbitControls.js';
 
-/* ---------- Configurator 3D ---------- */
-#ew .config { border-top: 1px solid var(--line); background: #f1f1ef; }
-#ew .config .wrap { display: grid; grid-template-columns: 1fr 2fr; gap: 24px; }
-@media (max-width: 1000px) { #ew .config .wrap { grid-template-columns: 1fr; } }
-#ew .panel {
-  background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 16px;
-}
-#ew .panel label { display: block; font-size: 12px; color: var(--muted); margin: 12px 0 6px; text-transform: uppercase; letter-spacing: .06em; }
-#ew .panel input[type=file], #ew .panel input[type=range], #ew .panel input[type=number] {
-  width: 100%; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; background: #fff;
-}
-#ew .panel .row { display: flex; gap: 10px; }
-#ew .panel .row > * { flex: 1; }
+  const container = document.getElementById('stage3d');
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(0xf8f8f6);
 
-#ew .stage3d { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 10px; }
-#ew #stage3d { height: 520px; border-radius: 10px; overflow: hidden; background: #f3f3f3; position: relative; }
-#ew .hint { position: absolute; right: 10px; bottom: 10px; font-size: 12px; background: rgba(255,255,255,.9); border: 1px solid var(--line); border-radius: 999px; padding: 6px 10px; }
+  const renderer = new THREE.WebGLRenderer({antialias:true, preserveDrawingBuffer:true});
+  container.appendChild(renderer.domElement);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.8));
+
+  const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+  camera.position.set(0.9, 1.5, 4.2);
+
+  const controls = new OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true;
+  controls.dampingFactor = 0.05;
+  controls.target.set(0, 1.25, 0);
+  controls.update();
+
+  // Lumière douce
+  scene.add(new THREE.HemisphereLight(0xffffff, 0xbbbbaa, 0.9));
+  const dir = new THREE.DirectionalLight(0xffffff, 0.6);
+  dir.position.set(2.5, 4, 3); scene.add(dir);
+
+  // Sol + murs (pièce simple)
+  const grp = new THREE.Group(); scene.add(grp);
+  const floor = new THREE.Mesh(new THREE.PlaneGeometry(8,6), new THREE.MeshStandardMaterial({color:0xdddddd, roughness:0.95}));
+  floor.rotation.x = -Math.PI/2; floor.position.y = 0; grp.add(floor);
+
+  const wallMat = new THREE.MeshStandardMaterial({color:0xf4f4f4});
+  const wall = new THREE.Mesh(new THREE.PlaneGeometry(4.5, 2.7), wallMat);
+  wall.position.set(0,1.35,-1.8); grp.add(wall);
+
+  const wall2 = new THREE.Mesh(new THREE.PlaneGeometry(3.2, 2.7), new THREE.MeshStandardMaterial({color:0xeeeeee}));
+  wall2.position.set(-2.25,1.35,-0.2); wall2.rotation.y = Math.PI/2.6; grp.add(wall2);
+
+  // Taille responsive
+  function resize(){
+    const w = container.clientWidth, h = container.clientHeight || 520;
+    renderer.setSize(w,h); camera.aspect = w/h; camera.updateProjectionMatrix();
+  }
+  new ResizeObserver(resize).observe(container);
+
+  // Texture motif
+  const loader = new THREE.TextureLoader(); let motif = null;
+  const $ = id => document.getElementById(id);
+  const ui = { scale: $('scale'), rotation: $('rotation'), offx: $('offx'), offy: $('offy') };
+
+  function applyTex(tex){
+    tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+    tex.repeat.set(parseFloat(ui.scale.value), parseFloat(ui.scale.value));
+    tex.rotation = THREE.MathUtils.degToRad(parseFloat(ui.rotation.value||0));
+    tex.offset.set(parseFloat(ui.offx.value||0), parseFloat(ui.offy.value||0));
+    wall.material.map = tex; wall.material.needsUpdate = true;
+  }
+
+  $('fileInput').addEventListener('change', e=>{
+    const f = e.target.files[0]; if(!f) return;
+    const url = URL.createObjectURL(f);
+    loader.load(url, t=>{ motif = t; applyTex(motif); URL.revokeObjectURL(url); });
+  });
+
+  ['input','change'].forEach(evt=>{
+    ui.scale.addEventListener(evt, ()=> motif && (motif.repeat.set(+ui.scale.value, +ui.scale.value), motif.needsUpdate=true));
+    ui.rotation.addEventListener(evt, ()=> motif && (motif.rotation = THREE.MathUtils.degToRad(+ui.rotation.value), motif.needsUpdate=true));
+    ui.offx.addEventListener(evt, ()=> motif && (motif.offset.x = +ui.offx.value, motif.needsUpdate=true));
+    ui.offy.addEventListener(evt, ()=> motif && (motif.offset.y = +ui.offy.value, motif.needsUpdate=true));
+  });
+
+  $('reset').addEventListener('click', ()=>{
+    ui.scale.value = 1; ui.rotation.value = 0; ui.offx.value = 0; ui.offy.value = 0;
+    camera.position.set(0.9,1.5,4.2); controls.target.set(0,1.25,0); controls.update();
+    motif && applyTex(motif);
+  });
+
+  $('download').addEventListener('click', ()=>{
+    const a = document.createElement('a');
+    a.download = 'aperçu-3d.png';
+    a.href = renderer.domElement.toDataURL('image/png', 0.95);
+    a.click();
+  });
+
+  // Render loop
+  (function loop(){
+    requestAnimationFrame(loop);
+    controls.update();
+    renderer.render(scene, camera);
+  })();
+</script>
+</body>
+</html>
