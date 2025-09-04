@@ -3,211 +3,115 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Elegance — Papiers Peints</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <title>Papiers Peints - Elegance Italian Interior Design</title>
+  <link rel="stylesheet" href="styles.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 </head>
 <body>
-  <!-- Ajuste la marge pour ton header sticky -->
-  <div id="ew" style="--header-h:120px">
-    <!-- HERO -->
-    <section class="hero">
-      <div class="fade"></div>
-      <div class="scrollcue"></div>
-    </section>
+<div id="ew">
 
-    <!-- Collections -->
-    <section class="section">
-      <div class="container">
-        <div class="title-center">
-          <div class="sep"></div>
-          <h1 style="font-size:40px">Collections</h1>
-          <p class="muted text" style="margin-top:-2px">Prestige · 3D · Gold</p>
-          <div class="sep"></div>
-        </div>
-        <div class="grid">
-          <a class="card" href="prestige.html">
-            <img alt="Prestige" src="https://static.wixstatic.com/media/d77542_fe3d4bf7270746ca91adab75028f8e96~mv2.png"/>
-            <footer><h3>Prestige</h3><span class="chip text">Découvrir</span></footer>
-          </a>
-          <a class="card" href="collection-3d.html">
-            <img alt="3D" src="https://static.wixstatic.com/media/d77542_50d7633186c141a79a57e2549d69c278~mv2.png"/>
-            <footer><h3>3D</h3><span class="chip text">Découvrir</span></footer>
-          </a>
-          <a class="card" href="gold.html">
-            <img alt="Gold" src="https://static.wixstatic.com/media/d77542_74d9f4d77e5a44819123f2b70d71030b~mv2.png"/>
-            <footer><h3>Gold</h3><span class="chip text">Découvrir</span></footer>
-          </a>
-        </div>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="overlay"></div>
+  </section>
+
+  <!-- Collections -->
+  <section class="section">
+    <div class="container">
+      <h1 style="text-align:center;">Nos Collections</h1>
+      <div class="grid">
+        <a href="prestige.html" class="card">
+          <img src="https://static.wixstatic.com/media/d77542_fe3d4bf7270746ca91adab75028f8e96~mv2.png" alt="Prestige">
+          <h3>Prestige</h3>
+        </a>
+        <a href="collection-3d.html" class="card">
+          <img src="https://static.wixstatic.com/media/d77542_50d7633186c141a79a57e2549d69c278~mv2.png" alt="3D">
+          <h3>3D</h3>
+        </a>
+        <a href="gold.html" class="card">
+          <img src="https://static.wixstatic.com/media/d77542_74d9f4d77e5a44819123f2b70d71030b~mv2.png" alt="Gold">
+          <h3>Gold</h3>
+        </a>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- CONFIGURATEUR 3D -->
-    <section class="section config" id="configurateur">
-      <div class="container">
-        <div class="title-center">
-          <div class="sep"></div>
-          <h2 style="font-size:32px">Personnaliser son papier peint</h2>
-          <p class="muted text" style="margin-top:-2px">Importez votre motif, ajustez l’échelle, la rotation, l’offset et prévisualisez sur un mur 3D.</p>
-          <div class="sep"></div>
+  <!-- CONFIGURATEUR 3D -->
+  <section class="config">
+    <div class="container">
+      <h2 style="text-align:center;">Configurateur personnalisé</h2>
+      <p class="muted" style="text-align:center;">Importez votre motif et visualisez-le directement sur un mur 3D.</p>
+      <div class="wrap">
+        <div class="panel">
+          <label for="fileInput">Image du motif</label>
+          <input id="fileInput" type="file" accept="image/*"/>
+
+          <label for="scale">Échelle</label>
+          <input type="range" id="scale" min="0.5" max="3" step="0.1" value="1"/>
+
+          <label for="rotation">Rotation</label>
+          <input type="range" id="rotation" min="0" max="360" step="1" value="0"/>
         </div>
-
-        <div class="wrap">
-          <div class="panel">
-            <div class="label">Motif</div>
-            <div class="row">
-              <button class="btn" id="uploadBtn">Importer une image</button>
-              <input id="fileInput" type="file" accept="image/*" style="display:none"/>
-            </div>
-            <div class="label">Échelle motif</div><input id="scale" type="range" min="0.2" max="3" step="0.02" value="1"/>
-            <div class="label">Rotation motif</div><input id="rotation" type="range" min="0" max="360" step="1" value="0"/>
-            <div class="label">Décalage (X / Y)</div>
-            <div class="row">
-              <input id="offx" type="number" step="0.05" value="0" style="max-width:120px"/>
-              <input id="offy" type="number" step="0.05" value="0" style="max-width:120px"/>
-            </div>
-            <div class="label">Perspective (distance caméra)</div><input id="camdist" type="range" min="2.5" max="6.5" step="0.1" value="4.2"/>
-            <div class="row" style="margin-top:10px">
-              <button class="btn" id="reset">Réinitialiser</button>
-              <button class="btn primary" id="download">Télécharger l’aperçu</button>
-            </div>
-          </div>
-
-          <div class="stage3d">
-            <div class="room3d" id="room3d"></div>
-            <div class="controls3d text">Souris : orbit • Molette : zoom • Clic droit : pan</div>
-          </div>
-        </div>
+        <div class="stage3d" id="stage3d"></div>
       </div>
-    </section>
-  </div>
+    </div>
+  </section>
 
-  <!-- THREE.JS (module) -->
-  <script type="module">
-    import * as THREE from 'https://unpkg.com/three@0.161.0/build/three.module.js';
-    import { OrbitControls } from 'https://unpkg.com/three@0.161.0/examples/jsm/controls/OrbitControls.js';
+</div>
 
-    const root = document.getElementById('ew');
-    const stage = document.getElementById('room3d');
+<!-- Three.js -->
+<script type="module">
+  import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.161.0/build/three.module.js';
+  import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.161.0/examples/jsm/controls/OrbitControls.js';
 
-    // --- Scene ---
-    const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0xeeeeee);
+  const container = document.getElementById('stage3d');
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(0xf8f8f6);
 
-    const renderer = new THREE.WebGLRenderer({antialias:true,preserveDrawingBuffer:true});
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.8));
-    stage.appendChild(renderer.domElement);
+  const camera = new THREE.PerspectiveCamera(45, container.clientWidth/container.clientHeight, 0.1, 100);
+  camera.position.set(0,1.5,4);
 
-    const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
-    camera.position.set(1.4, 1.6, 4.2);
+  const renderer = new THREE.WebGLRenderer({antialias:true});
+  renderer.setSize(container.clientWidth, container.clientHeight);
+  container.appendChild(renderer.domElement);
 
-    const controls = new OrbitControls(camera, renderer.domElement);
-    controls.enableDamping = true;
-    controls.target.set(0,1.2,0);
-    controls.update();
+  const controls = new OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true;
+  controls.target.set(0,1.3,0);
 
-    // Lights
-    scene.add(new THREE.HemisphereLight(0xffffff, 0xb0b0b0, 0.8));
-    const dir = new THREE.DirectionalLight(0xffffff, 0.75);
-    dir.position.set(2,4,3);
-    scene.add(dir);
+  // Lights
+  scene.add(new THREE.HemisphereLight(0xffffff,0x888888,0.8));
+  const dir = new THREE.DirectionalLight(0xffffff,0.6);
+  dir.position.set(2,4,3);
+  scene.add(dir);
 
-    // --- Room geometry (sol + mur) ---
-    const room = new THREE.Group();
-    scene.add(room);
+  // Floor + wall
+  const floor = new THREE.Mesh(new THREE.PlaneGeometry(8,6), new THREE.MeshStandardMaterial({color:0xdddddd}));
+  floor.rotation.x = -Math.PI/2; scene.add(floor);
 
-    // Sol (béton)
-    const floorGeo = new THREE.PlaneGeometry(8, 6);
-    const floorMat = new THREE.MeshStandardMaterial({color:0xdddddd, roughness:0.95, metalness:0.0});
-    const floor = new THREE.Mesh(floorGeo, floorMat);
-    floor.rotation.x = -Math.PI/2;
-    floor.position.y = 0;
-    room.add(floor);
+  const wallMat = new THREE.MeshStandardMaterial({color:0xffffff});
+  const wall = new THREE.Mesh(new THREE.PlaneGeometry(4,2.5), wallMat);
+  wall.position.set(0,1.25,-2); scene.add(wall);
 
-    // Mur (où on applique le motif)
-    const wallGeo = new THREE.PlaneGeometry(4.5, 2.7); // ~ 450x270 cm
-    const wallMat = new THREE.MeshStandardMaterial({color:0xf5f5f5});
-    const wall = new THREE.Mesh(wallGeo, wallMat);
-    wall.position.set(0,1.35,-1.6);
-    room.add(wall);
-
-    // Un autre mur latéral pour l'effet pièce
-    const sideGeo = new THREE.PlaneGeometry(3, 2.7);
-    const sideMat = new THREE.MeshStandardMaterial({color:0xf0f0f0});
-    const side = new THREE.Mesh(sideGeo, sideMat);
-    side.position.set(-2.25,1.35,-0.1);
-    side.rotation.y = Math.PI/2.6;
-    room.add(side);
-
-    // Resize
-    function onResize(){
-      const {clientWidth:w, clientHeight:h} = stage;
-      renderer.setSize(w,h);
-      camera.aspect = w/h;
-      camera.updateProjectionMatrix();
-    }
-    new ResizeObserver(onResize).observe(stage);
-
-    // --- Texture controls ---
-    const loader = new THREE.TextureLoader();
-    let motifTex = null;
-
-    const byId = sel => root.querySelector(sel);
-    const ui = {
-      scale: byId('#scale'),
-      rotation: byId('#rotation'),
-      offx: byId('#offx'),
-      offy: byId('#offy'),
-      camdist: byId('#camdist')
-    };
-
-    function applyTexture(tex){
-      tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
-      tex.rotation = THREE.MathUtils.degToRad(parseFloat(ui.rotation.value||0));
-      tex.repeat.set(parseFloat(ui.scale.value), parseFloat(ui.scale.value));
-      tex.offset.set(parseFloat(ui.offx.value||0), parseFloat(ui.offy.value||0));
-      tex.needsUpdate = true;
-      wall.material.map = tex;
-      wall.material.needsUpdate = true;
-    }
-
-    // Upload
-    byId('#uploadBtn').addEventListener('click', ()=> byId('#fileInput').click());
-    byId('#fileInput').addEventListener('change', e=>{
-      const f=e.target.files[0]; if(!f) return;
-      const url = URL.createObjectURL(f);
-      loader.load(url, t=>{ motifTex=t; applyTexture(motifTex); URL.revokeObjectURL(url); });
+  const loader = new THREE.TextureLoader(); let motifTex=null;
+  document.getElementById('fileInput').addEventListener('change', e=>{
+    const f=e.target.files[0]; if(!f) return;
+    const url = URL.createObjectURL(f);
+    loader.load(url, tex=>{
+      tex.wrapS=tex.wrapT=THREE.RepeatWrapping;
+      motifTex=tex; wall.material.map=motifTex; wall.material.needsUpdate=true;
     });
+  });
 
-    // UI bindings
-    ['input','change'].forEach(evt=>{
-      ui.scale.addEventListener(evt, ()=>{ if(motifTex){ motifTex.repeat.set(parseFloat(ui.scale.value), parseFloat(ui.scale.value)); motifTex.needsUpdate=true; }});
-      ui.rotation.addEventListener(evt, ()=>{ if(motifTex){ motifTex.rotation = THREE.MathUtils.degToRad(parseFloat(ui.rotation.value||0)); motifTex.needsUpdate=true; }});
-      ui.offx.addEventListener(evt, ()=>{ if(motifTex){ motifTex.offset.x = parseFloat(ui.offx.value||0); motifTex.needsUpdate=true; }});
-      ui.offy.addEventListener(evt, ()=>{ if(motifTex){ motifTex.offset.y = parseFloat(ui.offy.value||0); motifTex.needsUpdate=true; }});
-      ui.camdist.addEventListener(evt, ()=>{ camera.position.setLength(parseFloat(ui.camdist.value)); });
-    });
+  document.getElementById('scale').addEventListener('input', e=>{
+    if(motifTex){ motifTex.repeat.set(+e.target.value, +e.target.value); motifTex.needsUpdate=true; }
+  });
+  document.getElementById('rotation').addEventListener('input', e=>{
+    if(motifTex){ motifTex.rotation=THREE.MathUtils.degToRad(+e.target.value); motifTex.needsUpdate=true; }
+  });
 
-    // Reset & Download
-    byId('#reset').addEventListener('click', ()=>{
-      ui.scale.value=1; ui.rotation.value=0; ui.offx.value=0; ui.offy.value=0; ui.camdist.value=4.2;
-      camera.position.set(1.4,1.6,4.2); controls.target.set(0,1.2,0); controls.update();
-      if(motifTex){ applyTexture(motifTex); }
-    });
-
-    byId('#download').addEventListener('click', ()=>{
-      const a=document.createElement('a');
-      a.download='aperçu-3d.png';
-      a.href=renderer.domElement.toDataURL('image/png',0.95);
-      a.click();
-    });
-
-    // Render loop
-    (function loop(){
-      requestAnimationFrame(loop);
-      controls.update();
-      renderer.render(scene, camera);
-    })();
-  </script>
+  function animate(){ requestAnimationFrame(animate); controls.update(); renderer.render(scene,camera); }
+  animate();
+</script>
 </body>
 </html>
