@@ -148,4 +148,9 @@
     ['load','resize','orientationchange','scroll'].forEach(e=>window.addEventListener(e,postH,{passive:true}));
     document.querySelectorAll('img').forEach(img=>img.addEventListener('load', postH, { once:true, passive:true }));
     const mo = new MutationObserver(postH); mo.observe(document.body, { childList:true, subtree:true });
-    setTimeout
+    setTimeout(postH,200); setTimeout(postH,800); setTimeout(postH,1600);
+    document.documentElement.style.overflow='visible'; if(document.body) document.body.style.overflow='visible';
+  })();
+</script>
+</body>
+</html>
