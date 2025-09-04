@@ -1,88 +1,120 @@
-/* ===============================
-   Elegance Wallpapers – Minotti style (scope #ew)
-   =============================== */
-html,body{margin:0;padding:0}
-#ew{
-  --ink:#101010; --muted:#6f7377; --bg:#f8f8f6; --line:#e7e8eb; --gap:24px;
-  --header-h:120px; /* adapte si ton header Wix est plus haut */
-  color:var(--ink); background:var(--bg); padding-top:var(--header-h);
-  font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+/* Reset global */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
-#ew *{box-sizing:border-box}
+body {
+  font-family: "Inter", sans-serif;
+  color: #111;
+  background: #fff;
+}
 
-/* ---------- Hero (sans bande blanche) ---------- */
-#ew .hero{position:relative; min-height:92vh; display:grid; place-items:end center; overflow:hidden; border-bottom:1px solid var(--line)}
-#ew .hero:before{content:""; position:absolute; inset:0;
-  background:url('https://static.wixstatic.com/media/d77542_1baa8f118c7a4423a7975b7536517123~mv2.jpg') center/cover no-repeat;}
-#ew .hero:after{content:""; position:absolute; inset:auto 0 0 0; height:46vh;
-  background:linear-gradient(180deg,rgba(248,248,246,0) 0%, #f8f8f6 88%);}
+/* HERO */
+.hero {
+  height: 100vh;
+  background: url('https://static.wixstatic.com/media/d77542_1baa8f118c7a4423a7975b7536517123~mv2.jpg') center/cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.hero-overlay {
+  background: rgba(0,0,0,0.4);
+  padding: 2rem;
+  border-radius: 10px;
+  color: #fff;
+}
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+.hero p {
+  font-size: 1.2rem;
+}
 
-/* ---------- Grids / cards ---------- */
-#ew .container{max-width:1320px;margin:0 auto;padding:0 22px}
-#ew .section{padding:72px 0}
-#ew .grid{display:grid;gap:var(--gap);grid-template-columns:repeat(12,minmax(0,1fr))}
-#ew .card{grid-column:span 12;text-decoration:none;color:inherit;background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;transition:transform .4s ease}
-@media(min-width:900px){#ew .card{grid-column:span 4}}
-#ew .card:hover{transform:translateY(-3px)}
-#ew .card img{width:100%;height:52vh;min-height:320px;object-fit:cover;display:block;filter:saturate(.95);transition:transform .8s cubic-bezier(.2,.7,.2,1),filter .4s}
-#ew .card:hover img{transform:scale(1.02);filter:saturate(1)}
-#ew .card footer{display:flex;justify-content:space-between;align-items:center;padding:16px 18px;border-top:1px solid var(--line);background:#fff}
-#ew h1,#ew h2,#ew h3{font-family:"Playfair Display",serif;font-weight:400;letter-spacing:.2px;margin:0 0 10px}
-#ew .muted{color:var(--muted)}
-#ew .chip{font-size:12px;letter-spacing:.06em;padding:6px 10px;border:1px solid var(--line);border-radius:999px}
+/* COLLECTIONS */
+.collections {
+  padding: 4rem 2rem;
+  text-align: center;
+}
+.collections .grid {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+.collections .card {
+  background: #f6f6f6;
+  padding: 2rem 3rem;
+  border-radius: 8px;
+  font-size: 1.5rem;
+  text-decoration: none;
+  color: #111;
+  transition: 0.3s;
+}
+.collections .card:hover {
+  background: #ddd;
+}
 
-/* ---------- Collections pages ---------- */
-#ew .header-collection{display:flex;justify-content:space-between;align-items:end;gap:18px;margin-bottom:12px}
-#ew .filters{display:flex;gap:10px;flex-wrap:wrap}
-#ew .filter{border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 12px;font-size:13px;text-decoration:none;color:var(--ink)}
-#ew .catalog{display:grid;gap:var(--gap);grid-template-columns:repeat(12,minmax(0,1fr))}
-#ew .tile{grid-column:span 12;text-decoration:none;color:inherit}
-@media(min-width:900px){#ew .tile{grid-column:span 6}}
-#ew .tile img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:14px;display:block;background:#f2f2f2}
-#ew .tile h3{text-align:center;font-weight:400;margin:12px 0 0}
+/* CONFIGURATEUR */
+.configurateur {
+  padding: 4rem 2rem;
+  background: #f9f9f9;
+}
+.configurateur h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+.config-grid {
+  display: flex;
+  gap: 2rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+.config-left {
+  flex: 1;
+}
+.config-right {
+  flex: 2;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+canvas {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
 
-/* ---------- Back button ---------- */
-#ew .back{position:sticky;top:calc(var(--header-h) + 12px);z-index:5; display:inline-flex;align-items:center;gap:8px;
-  text-decoration:none;color:#fff;background:#1a1a1a;border-radius:999px;padding:9px 12px;border:1px solid #000;box-shadow:0 2px 8px rgba(0,0,0,.12)}
-#ew .back svg{width:18px;height:18px}
+/* Formulaire */
+.form-contact {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.form-contact input, .form-contact button {
+  padding: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+.form-contact button {
+  background: black;
+  color: white;
+  cursor: pointer;
+}
+.form-contact button:hover {
+  background: #333;
+}
 
-/* ---------- Product page ---------- */
-#ew .product{padding:72px 0}
-#ew .product-wrap{display:grid;grid-template-columns:2fr 1fr;gap:46px;align-items:start}
-@media(max-width:1000px){#ew .product-wrap{grid-template-columns:1fr}}
-#ew .product-gallery img{width:100%;border-radius:14px;object-fit:cover;max-height:80vh;display:block;background:#f3f3f3}
-#ew .thumbs{display:flex;gap:12px;margin-top:14px;overflow-x:auto;padding-bottom:6px}
-#ew .thumbs img{width:96px;height:96px;object-fit:cover;border-radius:8px;cursor:pointer;border:1px solid var(--line);opacity:.75;transition:opacity .25s}
-#ew .thumbs img.active,#ew .thumbs img:hover{opacity:1}
-#ew .product-info h1{font-family:"Playfair Display",serif;font-weight:400;font-size:36px;margin:0 0 8px}
-#ew .product-info .collection{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:18px}
-#ew .product-info p.desc{font-size:16px;line-height:1.65;margin:0 0 18px}
-#ew .textures{display:flex;gap:12px;flex-wrap:wrap}
-#ew .tex{width:64px;height:64px;border-radius:8px;border:1px solid var(--line);background-size:cover;background-position:center;cursor:pointer;opacity:.85;transition:opacity .25s,border-color .25s}
-#ew .tex:hover,#ew .tex.active{opacity:1;border-color:#111}
-#ew .cta{margin-top:24px;display:flex;gap:10px;flex-wrap:wrap}
-#ew .btn{appearance:none;background:#111;color:#fff;border:none;border-radius:999px;padding:12px 18px;font-size:14px;cursor:pointer;transition:background .25s;text-decoration:none}
-#ew .btn.ghost{background:#fff;color:#111;border:1px solid #111}
-#ew .btn:hover{background:#333}
-#ew .btn.ghost:hover{background:#111;color:#fff}
-
-/* ---------- Fiche technique (modal) ---------- */
-#ew .modal{position:fixed;inset:0;background:rgba(8,10,12,.52);display:none;place-items:center;z-index:9999;padding:18px}
-#ew .modal.open{display:grid}
-#ew .modal .sheet{background:#fff;border-radius:14px;border:1px solid var(--line);max-width:900px;width:min(96vw,900px);padding:18px 18px 8px}
-#ew .modal .head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
-#ew .modal .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
-@media(max-width:720px){#ew .modal .grid4{grid-template-columns:repeat(2,1fr)}}
-#ew .tech{display:grid;place-items:center;border:1px solid var(--line);border-radius:12px;padding:16px 10px}
-#ew .tech img{width:48px;height:48px;object-fit:contain;display:block;margin-bottom:6px}
-
-/* ---------- Configurateur ---------- */
-#ew .config{border-top:1px solid var(--line);background:#f1f1ef}
-#ew .config .wrap{display:grid;grid-template-columns:1fr 2fr;gap:22px}
-@media(max-width:1000px){#ew .config .wrap{grid-template-columns:1fr}}
-#ew .panel{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px}
-#ew .panel label{display:block;font-size:13px;color:var(--muted);margin:0 0 8px}
-#ew .panel input[type=file]{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;background:#fff}
-#ew .stage3d{background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px}
-#ew #stage3d{height:520px;border-radius:10px;overflow:hidden;background:#f3f3f3;position:relative}
-#ew .hint{position:absolute;right:10px;bottom:10px;font-size:12px;background:rgba(255,255,255,.9);border:1px solid var(--line);border-radius:999px;padding:6px 10px}
+/* Responsive */
+@media (max-width: 768px) {
+  .hero h1 { font-size: 2rem; }
+  .config-grid { flex-direction: column; }
+}
