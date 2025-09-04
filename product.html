@@ -7,20 +7,27 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 <style>
   html,body{margin:0;background:#f8f8f6;color:#111;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial}
+  body{padding-bottom:140px;} /* pour atteindre le footer Wix */
   .container{max-width:1320px;margin:0 auto;padding:22px}
   .back{position:sticky;top:12px;z-index:5;display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:#fff;background:#1a1a1a;border-radius:999px;padding:9px 12px;border:1px solid #000;box-shadow:0 2px 8px rgba(0,0,0,.12)}
   .wrap{display:grid;grid-template-columns:2fr 1fr;gap:46px;align-items:start;margin-top:16px}
   @media(max-width:1000px){.wrap{grid-template-columns:1fr}}
-  .gallery img{width:100%;border-radius:14px;object-fit:cover;max-height:80vh;display:block;background:#f3f3f3}
+
+  /* Galerie 1:1 */
+  .gallery .main-wrap{position:relative;width:100%;aspect-ratio:1/1;border-radius:14px;background:#f3f3f3;overflow:hidden}
+  .gallery .main-wrap img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
   .thumbs{display:flex;gap:12px;margin-top:14px;overflow-x:auto;padding-bottom:6px}
   .thumbs img{width:96px;height:96px;object-fit:cover;border-radius:8px;cursor:pointer;border:1px solid #e7e8eb;opacity:.75;transition:opacity .25s}
   .thumbs img.active,.thumbs img:hover{opacity:1}
+
   h1{font-family:"Playfair Display",serif;font-weight:400;margin:6px 0 8px}
   .collection{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#6f7377;margin-bottom:6px}
   .desc{font-size:16px;line-height:1.65;margin:0 0 18px}
+
   .textures{display:flex;gap:12px;flex-wrap:wrap}
   .tex{width:64px;height:64px;border-radius:8px;border:1px solid #e7e8eb;background-size:cover;background-position:center;cursor:pointer;opacity:.85;transition:opacity .25s,border-color .25s}
   .tex:hover,.tex.active{opacity:1;border-color:#111}
+
   .cta{margin-top:22px;display:flex;gap:10px;flex-wrap:wrap}
   .btn{appearance:none;background:#111;color:#fff;border:none;border-radius:999px;padding:12px 18px;font-size:14px;cursor:pointer;transition:background .25s;text-decoration:none}
   .btn.ghost{background:#fff;color:#111;border:1px solid #111}
@@ -41,7 +48,6 @@
   html, body { overscroll-behavior:none; overflow:visible; -webkit-tap-highlight-color:transparent; }
   @media(max-width:768px){
     .wrap { grid-template-columns:1fr !important; gap:20px; }
-    .gallery img { max-height:60vh; }
     .thumbs { gap:10px; padding-bottom:2px; }
     .thumbs img { width:72px; height:72px; }
     .textures { gap:10px; }
@@ -60,7 +66,7 @@
 
   <div class="wrap">
     <div class="gallery">
-      <img id="main" src="" alt="">
+      <div class="main-wrap"><img id="main" src="" alt=""></div>
       <div class="thumbs" id="thumbs"></div>
     </div>
 
@@ -104,7 +110,7 @@
   if(!dataJSON){
     document.getElementById('title').textContent="Produit indisponible";
     document.getElementById('desc').textContent="Revenez à la collection pour sélectionner un modèle.";
-    const ph="https://via.placeholder.com/1200x900?text=Produit";
+    const ph="https://via.placeholder.com/1200x1200?text=Produit";
     document.getElementById('main').src=ph; document.getElementById('dl').href=ph;
   } else {
     const data = JSON.parse(dataJSON);
@@ -115,31 +121,34 @@
     const thumbs = document.getElementById('thumbs');
     const textures = document.getElementById('textures');
     const dl = document.getElementById('dl');
-    const imgs = (data.images||[]).length ? data.images : ["https://via.placeholder.com/1200x900?text=Produit"];
+    const imgs = (data.images||[]).length ? data.images : ["https://via.placeholder.com/1200x1200?text=Produit"];
     main.src = imgs[0]; dl.href = imgs[0];
     imgs.forEach((src,i)=>{
-      const t = new Image(); t.src=src; if(i===0) t.classList.add('active');
-      t.addEventListener('click', ()=>{ main.src=src; dl.href=src; thumbs.querySelectorAll('img').forEach(el=>el.classList.remove('active')); t.classList.add('active'); });
+      const t = new Image(); t.loading='lazy'; t.src=src; if(i===0) t.classList.add('active');
+      t.addEventListener('click', ()=>{ main.src=src; dl.href=src; thumbs.querySelectorAll('img').forEach(el=>el.classList.remove('active')); t.classList.add('active'); autoResize(); });
+      t.addEventListener('load', autoResize, { once:true });
       thumbs.appendChild(t);
       const tex=document.createElement('div'); tex.className='tex'; if(i===0) tex.classList.add('active');
       tex.style.backgroundImage=`url(${src})`;
-      tex.addEventListener('click', ()=>{ main.src=src; dl.href=src; textures.querySelectorAll('.tex').forEach(el=>el.classList.remove('active')); tex.classList.add('active'); });
+      tex.addEventListener('click', ()=>{ main.src=src; dl.href=src; textures.querySelectorAll('.tex').forEach(el=>el.classList.remove('active')); tex.classList.add('active'); autoResize(); });
       textures.appendChild(tex);
     });
+    main.addEventListener('load', autoResize, { once:false });
   }
 
-  // Devis → ouvre mailto en standalone, sinon message Wix
-  const devis = document.getElementById('devis');
-  devis.addEventListener('click', (e)=>{
+  // Devis → page contact
+  const CONTACT_URL = "https://www.elegance-design.fr/contact-8";
+  document.getElementById('devis').addEventListener('click',(e)=>{
     e.preventDefault();
     try{
       if(parent && parent!==window){
-        parent.postMessage({type:'EW_QUOTE_FROM_PRODUCT'},'*');
+        parent.postMessage({ type:'EW_GO_CONTACT', url: CONTACT_URL }, '*');
         return;
       }
     }catch{}
-    const t=document.getElementById('title').textContent||'Produit';
-    location.href="mailto:contact@elegance-design.fr?subject="+encodeURIComponent("Demande devis — "+t);
+    // fallback
+    try{ window.top.location.href = CONTACT_URL; }
+    catch{ location.href = "mailto:info@elegance-design.fr?subject=" + encodeURIComponent("Demande devis — " + (document.getElementById('title').textContent||"Produit")); }
   });
 
   // Modal technique
@@ -148,11 +157,30 @@
   document.getElementById('closeTech').addEventListener('click', ()=> modal.classList.remove('open'));
   modal.addEventListener('click', (e)=>{ if(e.target===modal) modal.classList.remove('open'); });
 
-  // Auto-resize iFrame (throttle)
-  let rafId=0; function postH(){ if(rafId) return; rafId=requestAnimationFrame(()=>{rafId=0;try{var h=Math.max(document.documentElement.scrollHeight,document.body?document.body.scrollHeight:0);parent&&parent.postMessage({type:'EW_IFRAME_RESIZE',height:h},'*');}catch{}}); }
-  ['load','resize','orientationchange'].forEach(e=>window.addEventListener(e,postH,{passive:true}));
-  new (window.ResizeObserver||function(){return{observe(){}}})(postH).observe(document.documentElement);
-  setTimeout(postH,250); setTimeout(postH,1200);
+  /* ===== Auto-height iFrame Wix (renforcé) ===== */
+  let rafId=0;
+  function autoResize(){
+    if (rafId) return;
+    rafId = requestAnimationFrame(() => {
+      rafId = 0;
+      try {
+        const h = Math.max(
+          document.documentElement.scrollHeight,
+          document.body ? document.body.scrollHeight : 0
+        );
+        parent && parent.postMessage({ type:'EW_IFRAME_RESIZE', height: h }, '*');
+      } catch {}
+    });
+  }
+  ['load','resize','orientationchange','scroll'].forEach(e=>window.addEventListener(e,autoResize,{passive:true}));
+  document.querySelectorAll('img').forEach(img=>{
+    img.addEventListener('load', autoResize, { once:true, passive:true });
+  });
+  const mo = new MutationObserver(autoResize);
+  mo.observe(document.body, { childList:true, subtree:true });
+  setTimeout(autoResize,200); setTimeout(autoResize,800); setTimeout(autoResize,1600);
+
+  document.documentElement.style.overflow='visible'; if(document.body) document.body.style.overflow='visible';
 })();
 </script>
 </body>
