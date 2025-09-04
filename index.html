@@ -7,7 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 <style>
   html,body{height:100%} html,body,*{box-sizing:border-box}
-  body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:#111;background:#f8f8f6}
+  body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:#111;background:#f8f8f6; padding-bottom:140px;} /* espace pour atteindre le footer Wix */
   h1,h2,h3{font-family:"Playfair Display",serif;font-weight:400;letter-spacing:.2px;margin:0 0 8px}
   .muted{color:#6f7377}
   .section{padding:72px 22px}
@@ -63,15 +63,15 @@
   <div class="container">
     <div class="grid">
       <a class="card" href="prestige.html">
-        <img src="https://static.wixstatic.com/media/d77542_fe3d4bf7270746ca91adab75028f8e96~mv2.png" alt="Collection Prestige">
+        <img loading="lazy" src="https://static.wixstatic.com/media/d77542_fe3d4bf7270746ca91adab75028f8e96~mv2.png" alt="Collection Prestige">
         <footer><h3 style="margin:0">Prestige</h3><span class="chip">Découvrir</span></footer>
       </a>
       <a class="card" href="collection-3d.html">
-        <img src="https://static.wixstatic.com/media/d77542_50d7633186c141a79a57e2549d69c278~mv2.png" alt="Collection 3D">
+        <img loading="lazy" src="https://static.wixstatic.com/media/d77542_50d7633186c141a79a57e2549d69c278~mv2.png" alt="Collection 3D">
         <footer><h3 style="margin:0">3D</h3><span class="chip">Découvrir</span></footer>
       </a>
       <a class="card" href="gold.html">
-        <img src="https://static.wixstatic.com/media/d77542_74d9f4d77e5a44819123f2b70d71030b~mv2.png" alt="Collection Gold">
+        <img loading="lazy" src="https://static.wixstatic.com/media/d77542_74d9f4d77e5a44819123f2b70d71030b~mv2.png" alt="Collection Gold">
         <footer><h3 style="margin:0">Gold</h3><span class="chip">Découvrir</span></footer>
       </a>
     </div>
@@ -79,16 +79,35 @@
 </section>
 
 <script>
-/* auto-height iFrame Wix (pas de double scroll) */
+/* ===== Auto-height iFrame Wix (renforcé) ===== */
 (function(){
   let rafId=0;
-  function postH(){ if(rafId) return; rafId=requestAnimationFrame(()=>{rafId=0;try{
-    const h=Math.max(document.documentElement.scrollHeight,document.body?document.body.scrollHeight:0);
-    parent&&parent.postMessage({type:'EW_IFRAME_RESIZE',height:h},'*');
-  }catch{}}); }
-  ['load','resize','orientationchange'].forEach(e=>window.addEventListener(e,postH,{passive:true}));
-  new (window.ResizeObserver||function(){return{observe(){}}})(postH).observe(document.documentElement);
-  setTimeout(postH,250); setTimeout(postH,1200);
+  const postH = () => {
+    if (rafId) return;
+    rafId = requestAnimationFrame(() => {
+      rafId = 0;
+      try {
+        const h = Math.max(
+          document.documentElement.scrollHeight,
+          document.body ? document.body.scrollHeight : 0
+        );
+        parent && parent.postMessage({ type:'EW_IFRAME_RESIZE', height: h }, '*');
+      } catch {}
+    });
+  };
+  // évènements
+  ['load','resize','orientationchange','scroll'].forEach(e=>window.addEventListener(e,postH,{passive:true}));
+  // images
+  document.querySelectorAll('img').forEach(img=>{
+    img.addEventListener('load', postH, { once:true, passive:true });
+  });
+  // mutations (contenu qui change)
+  const mo = new MutationObserver(postH);
+  mo.observe(document.body, { childList:true, subtree:true });
+  // kickers
+  setTimeout(postH,200); setTimeout(postH,800); setTimeout(postH,1600);
+  // évite scroll interne
+  document.documentElement.style.overflow='visible'; if(document.body) document.body.style.overflow='visible';
 })();
 </script>
 </body>
