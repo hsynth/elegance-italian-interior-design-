@@ -4,21 +4,19 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Elegance — Papiers Peints Haut de Gamme</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 
-<!-- ===== Styles intégrés (aucune dépendance externe) ===== -->
 <style>
-  /* Reset + base */
+  /* ===== Base ===== */
   html,body{height:100%} html,body,*{box-sizing:border-box}
   body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:#111;background:#f8f8f6}
   h1,h2,h3{font-family:"Playfair Display",serif;font-weight:400;letter-spacing:.2px;margin:0 0 8px}
   .muted{color:#6f7377}
-
-  /* Conteneur */
   .section{padding:72px 22px}
   .container{max-width:1320px;margin:0 auto}
 
-  /* ===== HERO PLEIN ÉCRAN (zéro bande blanche) ===== */
-  .hero{position:relative;height:100vh;min-height:540px;display:grid;place-items:center;overflow:hidden}
+  /* ===== Hero plein écran ===== */
+  .hero{position:relative;height:100vh;min-height:560px;display:grid;place-items:center;overflow:hidden}
   .hero::before{content:"";position:absolute;inset:0;background:url('https://static.wixstatic.com/media/d77542_1baa8f118c7a4423a7975b7536517123~mv2.jpg') center/cover no-repeat}
   .hero .cap{position:relative;z-index:1;text-align:center;color:#fff;background:rgba(0,0,0,.35);padding:20px 26px;border-radius:12px}
   .hero .cap p{margin:6px 0 0;font-size:14px}
@@ -48,22 +46,20 @@
   .btn.primary:hover{background:#333}
   .btn.ghost{background:#fff;color:#111;border:1px solid #111}
   .btn.ghost:hover{background:#111;color:#fff}
+  .hint{position:absolute;right:10px;bottom:10px;font-size:12px;background:rgba(255,255,255,.9);border:1px solid #e7e8eb;border-radius:999px;padding:6px 10px}
 
   .stage{background:#fff;border:1px solid #e7e8eb;border-radius:14px;padding:10px}
   #stage3d{height:520px;border-radius:10px;overflow:hidden;background:#f3f3f3;position:relative}
-  .hint{position:absolute;right:10px;bottom:10px;font-size:12px;background:rgba(255,255,255,.9);border:1px solid #e7e8eb;border-radius:999px;padding:6px 10px}
 
-  /* Accessibilité mobile */
   @media(max-width:768px){
     .hero .cap{padding:14px 16px}
     .card img{height:40vh}
   }
 </style>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<!-- ================= HERO ================= -->
+<!-- HERO -->
 <section class="hero" aria-label="Visuel d’introduction">
   <div class="cap">
     <h1>Papiers Peints Élégance</h1>
@@ -71,7 +67,7 @@
   </div>
 </section>
 
-<!-- ================= COLLECTIONS ================= -->
+<!-- Collections -->
 <section class="section">
   <div class="container" style="text-align:center;margin-bottom:20px">
     <h2>Collections</h2>
@@ -95,7 +91,7 @@
   </div>
 </section>
 
-<!-- ================= CONFIGURATEUR ================= -->
+<!-- Configurateur -->
 <section class="section config" id="configurateur">
   <div class="container" style="text-align:center;margin-bottom:18px">
     <h2>Configurateur personnalisé</h2>
@@ -103,7 +99,7 @@
   </div>
 
   <div class="container wrap">
-    <!-- Panneau gauche -->
+    <!-- Panneau -->
     <div class="panel">
       <label for="fileInput">Votre image (jpg, png, webp)</label>
       <input id="fileInput" type="file" accept="image/*"/>
@@ -116,14 +112,17 @@
       <hr style="border:none;border-top:1px solid #e7e8eb;margin:16px 0">
 
       <h3 style="margin:0 0 6px">Demande de personnalisation</h3>
-      <p class="muted" style="margin:0 0 10px">Recevez un devis en 24h.</p>
+      <p class="muted" style="margin:0 0 10px">Vos informations restent confidentielles.</p>
+
+      <!-- petit honeypot anti-bot -->
+      <input id="hp_city" type="text" aria-hidden="true" tabindex="-1" style="position:absolute;left:-9999px;opacity:0">
 
       <div class="row-1">
-        <input id="q_name" type="text" placeholder="Nom & Prénom" />
+        <input id="q_name" type="text" placeholder="Nom & Prénom" autocomplete="name" />
       </div>
       <div class="row">
-        <input id="q_phone" type="tel" placeholder="Téléphone" />
-        <input id="q_email" type="email" placeholder="Email" />
+        <input id="q_phone" type="tel" placeholder="Téléphone" autocomplete="tel" />
+        <input id="q_email" type="email" placeholder="Email" autocomplete="email" />
       </div>
       <div class="cta">
         <button class="btn primary" id="quote">Envoyer la demande</button>
@@ -139,14 +138,13 @@
   </div>
 </section>
 
-<!-- ===== Three.js (UMD) ===== -->
+<!-- Three.js -->
 <script src="https://cdn.jsdelivr.net/npm/three@0.161.0/build/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.161.0/examples/js/controls/OrbitControls.js"></script>
 
-<!-- ===== JS : configurateur, envoi et auto-resize iFrame ===== -->
 <script>
+/* ===== 3D Configurateur ===== */
 (function(){
-  // ---------- SCENE 3D ----------
   var container = document.getElementById('stage3d');
   var scene = new THREE.Scene(); scene.background = new THREE.Color(0xf8f8f6);
   var renderer = new THREE.WebGLRenderer({antialias:true, preserveDrawingBuffer:true});
@@ -182,14 +180,12 @@
     wall.material.map=t; wall.material.needsUpdate=true;
   }
 
-  // ---------- UPLOAD ----------
   document.getElementById('fileInput').addEventListener('change',function(e){
     var f=e.target.files&&e.target.files[0]; if(!f) return;
     var url=URL.createObjectURL(f);
     loader.load(url,function(tex){ motif=tex; applyTexture(motif); URL.revokeObjectURL(url); }, undefined, function(){ alert("Image invalide."); });
   });
 
-  // ---------- CONTROLS ----------
   document.getElementById('reset').addEventListener('click',function(){
     wall.material.map=null; wall.material.needsUpdate=true;
     camera.position.set(0.9,1.5,4.2); controls.target.set(0,1.25,0); controls.update();
@@ -200,25 +196,32 @@
     a.href=renderer.domElement.toDataURL('image/png',.95); a.click();
   });
 
-  // ---------- DEMANDE DEVIS ----------
+  // Demande de devis (sécurisé côté front : pas d'envoi direct, on passe par Wix)
   document.getElementById('quote').addEventListener('click',function(){
     var name=document.getElementById('q_name').value.trim();
     var phone=document.getElementById('q_phone').value.trim();
     var email=document.getElementById('q_email').value.trim();
+    var hp=document.getElementById('hp_city').value.trim();
     var status=document.getElementById('q_status');
-    if(!name || !email){ status.textContent="Nom et email requis."; return; }
-    // 1) Si la page est dans un iFrame Wix, on envoie à Wix
-    try{ if(parent && parent!==window){ parent.postMessage({type:'EW_QUOTE',name,phone,email},'*'); status.textContent="Demande envoyée. Merci !"; return; } }catch(e){}
-    // 2) Sinon (GitHub Pages), fallback mailto
-    var subject=encodeURIComponent("Demande de personnalisation — Elegance");
-    var body=encodeURIComponent("Nom: "+name+"\nTéléphone: "+phone+"\nEmail: "+email);
-    window.location.href="mailto:contact@elegance-design.fr?subject="+subject+"&body="+body;
+
+    if(hp!==""){ status.textContent=""; return; } // honeypot : bot détecté → silence
+    if(!name || !email || !/^\S+@\S+\.\S+$/.test(email)){ status.textContent="Nom et email valides requis."; return; }
+
+    var payload={type:'EW_QUOTE', name, phone, email};
+    try{
+      if(parent && parent!==window){
+        parent.postMessage(payload,'*'); // Velo : ouvrir Lightbox et enregistrer côté Wix
+        status.textContent="Demande transmise. Merci !";
+        return;
+      }
+    }catch(e){}
+    // Hors Wix (ex: GitHub Pages) : afficher un message propre
+    status.textContent="Ouvrez cette page dans votre site pour finaliser la demande.";
   });
 
-  // ---------- RENDER LOOP ----------
   (function loop(){ requestAnimationFrame(loop); controls.update(); renderer.render(scene,camera); })();
 
-  // ---------- AUTO-RESIZE IFRAME (Wix) ----------
+  // Auto-resize iFrame (Wix)
   function postH(){
     try{
       var h=Math.max(document.documentElement.scrollHeight,document.body?document.body.scrollHeight:0);
