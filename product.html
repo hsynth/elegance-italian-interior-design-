@@ -36,6 +36,19 @@
   @media(max-width:720px){.grid4{grid-template-columns:repeat(2,1fr)}}
   .tech{display:grid;place-items:center;border:1px solid #e7e8eb;border-radius:12px;padding:16px 10px}
   .tech img{width:48px;height:48px;object-fit:contain;margin-bottom:6px}
+
+  /* Mobile polish */
+  html, body { overscroll-behavior:none; overflow:visible; -webkit-tap-highlight-color:transparent; }
+  @media(max-width:768px){
+    .wrap { grid-template-columns:1fr !important; gap:20px; }
+    .gallery img { max-height:60vh; }
+    .thumbs { gap:10px; padding-bottom:2px; }
+    .thumbs img { width:72px; height:72px; }
+    .textures { gap:10px; }
+    .tex { width:56px; height:56px; }
+    .back { top:max(12px, env(safe-area-inset-top)); }
+  }
+  img{content-visibility:auto;contain-intrinsic-size:800px 600px}
 </style>
 </head>
 <body>
@@ -61,7 +74,7 @@
 
       <div class="cta">
         <button class="btn ghost" id="tech">Fiche technique</button>
-        <a class="btn" href="mailto:contact@elegance-design.fr?subject=Demande%20devis%20papier%20peint">Demander un devis</a>
+        <a class="btn" id="devis" href="#">Demander un devis</a>
         <a class="btn ghost" id="dl" href="#" target="_blank" rel="noreferrer">Télécharger l’image</a>
       </div>
     </div>
@@ -91,33 +104,42 @@
   if(!dataJSON){
     document.getElementById('title').textContent="Produit indisponible";
     document.getElementById('desc').textContent="Revenez à la collection pour sélectionner un modèle.";
-    document.getElementById('main').src="https://via.placeholder.com/1200x900?text=Produit";
-    document.getElementById('dl').href="#";
-    return;
+    const ph="https://via.placeholder.com/1200x900?text=Produit";
+    document.getElementById('main').src=ph; document.getElementById('dl').href=ph;
+  } else {
+    const data = JSON.parse(dataJSON);
+    document.getElementById('collection').textContent = data.collection || 'Collection';
+    document.getElementById('title').textContent = data.title || 'Produit';
+    document.getElementById('desc').textContent = data.desc || '';
+    const main = document.getElementById('main');
+    const thumbs = document.getElementById('thumbs');
+    const textures = document.getElementById('textures');
+    const dl = document.getElementById('dl');
+    const imgs = (data.images||[]).length ? data.images : ["https://via.placeholder.com/1200x900?text=Produit"];
+    main.src = imgs[0]; dl.href = imgs[0];
+    imgs.forEach((src,i)=>{
+      const t = new Image(); t.src=src; if(i===0) t.classList.add('active');
+      t.addEventListener('click', ()=>{ main.src=src; dl.href=src; thumbs.querySelectorAll('img').forEach(el=>el.classList.remove('active')); t.classList.add('active'); });
+      thumbs.appendChild(t);
+      const tex=document.createElement('div'); tex.className='tex'; if(i===0) tex.classList.add('active');
+      tex.style.backgroundImage=`url(${src})`;
+      tex.addEventListener('click', ()=>{ main.src=src; dl.href=src; textures.querySelectorAll('.tex').forEach(el=>el.classList.remove('active')); tex.classList.add('active'); });
+      textures.appendChild(tex);
+    });
   }
-  const data = JSON.parse(dataJSON);
 
-  document.getElementById('collection').textContent = data.collection || 'Collection';
-  document.getElementById('title').textContent = data.title || 'Produit';
-  document.getElementById('desc').textContent = data.desc || '';
-
-  const main = document.getElementById('main');
-  const thumbs = document.getElementById('thumbs');
-  const textures = document.getElementById('textures');
-  const dl = document.getElementById('dl');
-
-  const imgs = (data.images||[]).length ? data.images : ["https://via.placeholder.com/1200x900?text=Produit"];
-  main.src = imgs[0]; dl.href = imgs[0];
-
-  imgs.forEach((src,i)=>{
-    const t = new Image(); t.src=src; if(i===0) t.classList.add('active');
-    t.addEventListener('click', ()=>{ main.src=src; dl.href=src; thumbs.querySelectorAll('img').forEach(el=>el.classList.remove('active')); t.classList.add('active'); });
-    thumbs.appendChild(t);
-
-    const tex=document.createElement('div'); tex.className='tex'; if(i===0) tex.classList.add('active');
-    tex.style.backgroundImage=`url(${src})`;
-    tex.addEventListener('click', ()=>{ main.src=src; dl.href=src; textures.querySelectorAll('.tex').forEach(el=>el.classList.remove('active')); tex.classList.add('active'); });
-    textures.appendChild(tex);
+  // Devis → ouvre mailto en standalone, sinon message Wix
+  const devis = document.getElementById('devis');
+  devis.addEventListener('click', (e)=>{
+    e.preventDefault();
+    try{
+      if(parent && parent!==window){
+        parent.postMessage({type:'EW_QUOTE_FROM_PRODUCT'},'*');
+        return;
+      }
+    }catch{}
+    const t=document.getElementById('title').textContent||'Produit';
+    location.href="mailto:contact@elegance-design.fr?subject="+encodeURIComponent("Demande devis — "+t);
   });
 
   // Modal technique
@@ -126,16 +148,11 @@
   document.getElementById('closeTech').addEventListener('click', ()=> modal.classList.remove('open'));
   modal.addEventListener('click', (e)=>{ if(e.target===modal) modal.classList.remove('open'); });
 
-  // Auto-resize iFrame (Wix)
-  function postH(){
-    try{
-      var h=Math.max(document.documentElement.scrollHeight,document.body?document.body.scrollHeight:0);
-      parent&&parent.postMessage({type:'EW_IFRAME_RESIZE',height:h},'*');
-    }catch(e){}
-  }
-  window.addEventListener('load',postH); window.addEventListener('resize',postH);
-  new (window.ResizeObserver||function(){return {observe:function(){}}})(postH).observe(document.documentElement);
-  setTimeout(postH,300); setTimeout(postH,1200);
+  // Auto-resize iFrame (throttle)
+  let rafId=0; function postH(){ if(rafId) return; rafId=requestAnimationFrame(()=>{rafId=0;try{var h=Math.max(document.documentElement.scrollHeight,document.body?document.body.scrollHeight:0);parent&&parent.postMessage({type:'EW_IFRAME_RESIZE',height:h},'*');}catch{}}); }
+  ['load','resize','orientationchange'].forEach(e=>window.addEventListener(e,postH,{passive:true}));
+  new (window.ResizeObserver||function(){return{observe(){}}})(postH).observe(document.documentElement);
+  setTimeout(postH,250); setTimeout(postH,1200);
 })();
 </script>
 </body>
