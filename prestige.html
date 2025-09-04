@@ -1,5 +1,133 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Prestige — Collection</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0;background:#f8f8f6;color:#111;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial}
+  body{padding-bottom:140px;} /* pour atteindre le footer Wix */
+  .container{max-width:1320px;margin:0 auto;padding:22px}
+  .header{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin:10px 0 6px}
+  h1{font-family:"Playfair Display",serif;font-weight:400;margin:0}
+  .muted{color:#6f7377}
+  .back{position:sticky;top:12px;z-index:5;display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:#fff;background:#1a1a1a;border-radius:999px;padding:9px 12px;border:1px solid #000;box-shadow:0 2px 8px rgba(0,0,0,.12)}
+  .grid{display:grid;gap:24px;grid-template-columns:repeat(12,minmax(0,1fr));margin-top:14px}
+  .tile{grid-column:span 12;text-decoration:none;color:inherit}
+  .tile img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:14px;display:block;background:#f2f2f2}
+  .tile h3{text-align:center;font-family:"Playfair Display",serif;font-weight:400;margin:10px 0 0}
+  @media(min-width:900px){.tile{grid-column:span 6}}
+  html, body { overscroll-behavior:none; overflow:visible; -webkit-tap-highlight-color:transparent; }
+  @media(max-width:768px){ .grid{gap:16px} .tile img{aspect-ratio:3/2} .back{top:max(12px,env(safe-area-inset-top))} }
+  img{content-visibility:auto;contain-intrinsic-size:800px 600px}
+</style>
+</head>
+<body>
+<div class="container">
+  <a class="back" href="index.html" aria-label="Retour">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 18l-6-6 6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Retour
+  </a>
+  <div class="header">
+    <div>
+      <h1>Prestige</h1>
+      <div class="muted">Sélection haut de gamme</div>
+    </div>
+  </div>
+
+  <div class="grid" id="grid"></div>
+</div>
+
 <script>
-  /* … votre code qui remplit la grille … */
+  const COLLECTION_NAME = "Prestige";
+  const ITEMS = [
+    { title:"Borderless", images:[
+      "https://static.wixstatic.com/media/d77542_78b3ccb5edcc4753aa77c50c39b5291e~mv2.jpg",
+      "https://static.wixstatic.com/media/d77542_6825474cdfcf4d8a8d570086095ccf44~mv2.jpg",
+      "https://static.wixstatic.com/media/d77542_7fe66e910c0141dd9c0e274b8ddee59d~mv2.jpg",
+    ], desc:"Graphisme continu aux bords effacés pour une profondeur douce et contemporaine."},
+
+    { title:"Bloom", images:[
+      "https://static.wixstatic.com/media/d77542_a9cd9338486b438c9584838ae4e64473~mv2.jpg",
+      "https://static.wixstatic.com/media/d77542_6453d5ba00f84a4794908cb4ebc4b66c~mv2.jpg",
+      "https://static.wixstatic.com/media/d77542_3f299a9cb7bd4b0eb3382ef8c5377f6a~mv2.jpg",
+      "https://static.wixstatic.com/media/d77542_a3e173d4ad9d4d2b97f64f68851c7a06~mv2.jpg",
+    ], desc:"Floraison oversize, lignes souples et palette feutrée : une présence poétique."},
+
+    { title:"Black 3D", images:[
+      "https://static.wixstatic.com/media/d77542_41844b73e66741579b666aea64dfb131~mv2.jpg",
+      "https://static.wixstatic.com/media/d77542_f1f943d334344580953ab76740cf1076~mv2.jpg",
+    ], desc:"Jeu d’ombres et de reliefs noirs pour une ambiance architecturale assumée."},
+
+    { title:"Beyond", images:[
+      "https://static.wixstatic.com/media/d77542_209aadb11d8b4d77b699c304f6b78e58~mv2.jpg",
+      "https://static.wixstatic.com/media/d77542_433a32a6106c41b5a2ec7eb881d3c167~mv2.jpg",
+    ], desc:"Perspective cinématographique, horizon abstrait et matières profondes."},
+
+    { title:"Besides The Present", images:[
+      "https://static.wixstatic.com/media/d77542_6e8b869f6a694de5af2f8e4238763b1a~mv2.jpg",
+      "https://static.wixstatic.com/media/d77542_94f7398ffa224921b52953d51a5d00f7~mv2.jpg",
+      "https://static.wixstatic.com/media/d77542_73f17351b19b4ddbb5a345518a41ec55~mv2.jpg",
+    ], desc:"Temps suspendu, superpositions délicates et tonalités enveloppantes."},
+
+    { title:"Batik", images:[
+      "https://static.wixstatic.com/media/d77542_341f8655f3734ed9ba98ba514e12e821~mv2.jpg",
+      "https://static.wixstatic.com/media/d77542_54a672df60ff454588937a616679ab14~mv2.jpg",
+      "https://static.wixstatic.com/media/d77542_49bd611a8e59440a9a9ffb6b7b75193b~mv2.jpg",
+    ], desc:"Motif inspiré des teintures traditionnelles, rendu textile raffiné."},
+
+    { title:"Autumn", images:[
+      "https://static.wixstatic.com/media/d77542_3ee5e4a72b5d4cbb88972dd901202d55~mv2.jpg",
+      "https://static.wixstatic.com/media/d77542_ed512e955cbb446993918f3d6b6d2212~mv2.jpg",
+    ], desc:"Palette automnale nuancée, feuilles stylisées et chaleur visuelle."},
+
+    { title:"Arcadia", images:[
+      "https://static.wixstatic.com/media/d77542_b01bcebb0f44480bb64533430382c232~mv2.jpg",
+      "https://static.wixstatic.com/media/d77542_ab460447c28e4c1d9212e06ea032ca07~mv2.jpg",
+    ], desc:"Paysage onirique, grands aplats texturés et sérénité minérale."},
+
+    { title:"Aquarium Muralla", images:[
+      "https://static.wixstatic.com/media/d77542_252a386d6baf421983f7243d7331f33d~mv2.jpg",
+      "https://static.wixstatic.com/media/d77542_f087c1b3d6b54e35b5203588d3a05b7d~mv2.jpg",
+      "https://static.wixstatic.com/media/d77542_1df10c6192b143ac9939d2730d922c28~mv2.jpg",
+    ], desc:"Mur-aquarium abstrait, transparences et mouvements aquatiques."},
+
+    { title:"Angels", images:[
+      "https://static.wixstatic.com/media/d77542_92b9b3deced54279bd0acbcae351ff77~mv2.jpg",
+      "https://static.wixstatic.com/media/d77542_9f1dc69afb73471ab2cb3852fc3726b8~mv2.jpg",
+      "https://static.wixstatic.com/media/d77542_827dc15260ce49abafeeaed9eceb7be4~mv2.jpg",
+    ], desc:"Figures éthérées, lumière diffuse et dorures subtiles."},
+
+    { title:"Altrove", images:[
+      "https://static.wixstatic.com/media/d77542_396d420d45a7457ca9e5f4ef659365ee~mv2.jpg",
+    ], desc:"Évasion graphique vers « ailleurs », textures douces et tons feutrés."},
+
+    { title:"All The Colours", images:[
+      "https://static.wixstatic.com/media/d77542_2bb9bcae008c47d8a69226ecfeb7d3fb~mv2.jpg",
+      "https://static.wixstatic.com/media/d77542_021b62035b31438f93ef6106c213919a~mv2.jpg",
+    ], desc:"Chromatisme maîtrisé, dégradés élégants et rythme pictural."},
+
+    { title:"Aquatica", images:[
+      "https://static.wixstatic.com/media/d77542_673f871246e84abb98e51717dc1a9a6b~mv2.jpg",
+      "https://static.wixstatic.com/media/d77542_0c8a4697657c4e35b1c5ae923603c268~mv2.jpg",
+    ], desc:"Ondulations aquatiques, minéral et nacré en subtil contrepoint."},
+  ];
+
+  const grid = document.getElementById('grid');
+  ITEMS.forEach(item=>{
+    const a=document.createElement('a'); a.href='product.html'; a.className='tile';
+    a.addEventListener('click',e=>{
+      e.preventDefault();
+      sessionStorage.setItem('EW_PRODUCT', JSON.stringify({
+        collection: COLLECTION_NAME, title: item.title, images: item.images, desc: item.desc
+      }));
+      location.href='product.html';
+    });
+    const img=new Image(); img.src=item.images[0]; img.alt=item.title; a.appendChild(img);
+    const h=document.createElement('h3'); h.textContent=item.title; a.appendChild(h);
+    grid.appendChild(a);
+  });
 
   /* ===== Auto-height iFrame Wix (renforcé) ===== */
   (function(){
@@ -18,75 +146,6 @@
       });
     };
     ['load','resize','orientationchange','scroll'].forEach(e=>window.addEventListener(e,postH,{passive:true}));
-    document.querySelectorAll('img').forEach(img=>{
-      img.addEventListener('load', postH, { once:true, passive:true });
-    });
-    const mo = new MutationObserver(postH);
-    mo.observe(document.body, { childList:true, subtree:true });
-    setTimeout(postH,200); setTimeout(postH,800); setTimeout(postH,1600);
-    document.documentElement.style.overflow='visible'; if(document.body) document.body.style.overflow='visible';
-  })();
-</script>
-
-<script>
-  const COLLECTION_NAME = "3D";
-  const ITEMS = [
-    { title:"Fairy Leaves", images:[
-      "https://static.wixstatic.com/media/d77542_6e88f99b79d842289fc245aa6f585a88~mv2.jpg",
-      "https://static.wixstatic.com/media/d77542_e80c83f8301f46eb91744df98d6cbcf4~mv2.jpg",
-      "https://static.wixstatic.com/media/d77542_4476f79efc6147d885c30be713ab74e6~mv2.jpg",
-    ], desc:"Feuillages sculptés, lumière douce et relief maîtrisé."},
-
-    { title:"Falling Lines", images:[
-      "https://static.wixstatic.com/media/d77542_778500da641445beb6f2fa620d641efe~mv2.jpg",
-      "https://static.wixstatic.com/media/d77542_5788604e493142cfa00a90bc39a3273a~mv2.jpg",
-      "https://static.wixstatic.com/media/d77542_0ad7dd7cb1904487b75f352b007558b4~mv2.jpg",
-    ], desc:"Strates verticales en mouvement, effet architectural."},
-
-    { title:"Groove", images:[
-      "https://static.wixstatic.com/media/d77542_f8d88f836fc64df8b351225c370e1e72~mv2.jpg",
-      "https://static.wixstatic.com/media/d77542_7ab199a2b2224116a1752b9c5b089ac1~mv2.jpg",
-      "https://static.wixstatic.com/media/d77542_4ec0fb4865b641adbebaee2ce9c3ca19~mv2.jpg",
-    ], desc:"Rainures graphiques, volume dynamique et sobre."},
-
-    { title:"Large Leaves", images:[
-      "https://static.wixstatic.com/media/d77542_be742bd255bf43079eaab25949174863~mv2.jpg",
-      "https://static.wixstatic.com/media/d77542_147808aee82b4a14b4583c73c68bdc25~mv2.jpg",
-      "https://static.wixstatic.com/media/d77542_ef7722d5c63547b5a858f93ec678f469~mv2.jpg",
-    ], desc:"Grandes feuilles en bas-relief, ambiance apaisante."},
-
-    { title:"Petals", images:[
-      "https://static.wixstatic.com/media/d77542_d43a6b1ad87541fc918fbe4c7239ddee~mv2.jpg",
-      "https://static.wixstatic.com/media/d77542_e17e80094fc24edd9f662112d2530d8e~mv2.jpg",
-      "https://static.wixstatic.com/media/d77542_02798f1e75124055983b4b1caac9be33~mv2.jpg",
-    ], desc:"Pétales en relief, douceur tactile et volumes apaisants."},
-
-    { title:"Rose", images:[
-      "https://static.wixstatic.com/media/d77542_6d37b0eb081e43eaba849b463348270e~mv2.jpg",
-      "https://static.wixstatic.com/media/d77542_d94048f6dbb943c1bcd9e1fb7b6df766~mv2.jpg",
-      "https://static.wixstatic.com/media/d77542_3d236ff2fd224bb3a80a59e8f37aae68~mv2.jpg",
-    ], desc:"Rosace en bas-relief, élégance intemporelle."},
-  ];
-
-  const grid = document.getElementById('grid');
-  ITEMS.forEach(item=>{
-    const a=document.createElement('a'); a.href='product.html'; a.className='tile';
-    a.addEventListener('click',e=>{
-      e.preventDefault();
-      sessionStorage.setItem('EW_PRODUCT', JSON.stringify({
-        collection: COLLECTION_NAME, title: item.title, images: item.images, desc: item.desc
-      }));
-      location.href='product.html';
-    });
-    const img=new Image(); img.src=item.images[0]; img.alt=item.title; a.appendChild(img);
-    const h=document.createElement('h3'); h.textContent=item.title; a.appendChild(h);
-    grid.appendChild(a);
-  });
-
-  let rafId=0; function postH(){ if(rafId) return; rafId=requestAnimationFrame(()=>{rafId=0;try{var h=Math.max(document.documentElement.scrollHeight,document.body?document.body.scrollHeight:0);parent&&parent.postMessage({type:'EW_IFRAME_RESIZE',height:h},'*');}catch{}}); }
-  ['load','resize','orientationchange'].forEach(e=>window.addEventListener(e,postH,{passive:true}));
-  new (window.ResizeObserver||function(){return{observe(){}}})(postH).observe(document.documentElement);
-  setTimeout(postH,250); setTimeout(postH,1200);
-</script>
-</body>
-</html>
+    document.querySelectorAll('img').forEach(img=>img.addEventListener('load', postH, { once:true, passive:true }));
+    const mo = new MutationObserver(postH); mo.observe(document.body, { childList:true, subtree:true });
+    setTimeout
