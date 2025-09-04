@@ -1,45 +1,71 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Produit — Elegance</title>
-  <link rel="stylesheet" href="styles.css"/>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Produit — Elegance</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0;background:#f8f8f6;color:#111;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial}
+  .container{max-width:1320px;margin:0 auto;padding:22px}
+  .back{position:sticky;top:12px;z-index:5;display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:#fff;background:#1a1a1a;border-radius:999px;padding:9px 12px;border:1px solid #000;box-shadow:0 2px 8px rgba(0,0,0,.12)}
+  .wrap{display:grid;grid-template-columns:2fr 1fr;gap:46px;align-items:start;margin-top:16px}
+  @media(max-width:1000px){.wrap{grid-template-columns:1fr}}
+  .gallery img{width:100%;border-radius:14px;object-fit:cover;max-height:80vh;display:block;background:#f3f3f3}
+  .thumbs{display:flex;gap:12px;margin-top:14px;overflow-x:auto;padding-bottom:6px}
+  .thumbs img{width:96px;height:96px;object-fit:cover;border-radius:8px;cursor:pointer;border:1px solid #e7e8eb;opacity:.75;transition:opacity .25s}
+  .thumbs img.active,.thumbs img:hover{opacity:1}
+  h1{font-family:"Playfair Display",serif;font-weight:400;margin:6px 0 8px}
+  .collection{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#6f7377;margin-bottom:6px}
+  .desc{font-size:16px;line-height:1.65;margin:0 0 18px}
+  .textures{display:flex;gap:12px;flex-wrap:wrap}
+  .tex{width:64px;height:64px;border-radius:8px;border:1px solid #e7e8eb;background-size:cover;background-position:center;cursor:pointer;opacity:.85;transition:opacity .25s,border-color .25s}
+  .tex:hover,.tex.active{opacity:1;border-color:#111}
+  .cta{margin-top:22px;display:flex;gap:10px;flex-wrap:wrap}
+  .btn{appearance:none;background:#111;color:#fff;border:none;border-radius:999px;padding:12px 18px;font-size:14px;cursor:pointer;transition:background .25s;text-decoration:none}
+  .btn.ghost{background:#fff;color:#111;border:1px solid #111}
+  .btn:hover{background:#333}
+  .btn.ghost:hover{background:#111;color:#fff}
+
+  /* Modal technique */
+  .modal{position:fixed;inset:0;background:rgba(8,10,12,.52);display:none;place-items:center;z-index:9999;padding:18px}
+  .modal.open{display:grid}
+  .sheet{background:#fff;border:1px solid #e7e8eb;border-radius:14px;max-width:900px;width:min(96vw,900px);padding:18px 18px 10px}
+  .head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  @media(max-width:720px){.grid4{grid-template-columns:repeat(2,1fr)}}
+  .tech{display:grid;place-items:center;border:1px solid #e7e8eb;border-radius:12px;padding:16px 10px}
+  .tech img{width:48px;height:48px;object-fit:contain;margin-bottom:6px}
+</style>
 </head>
 <body>
-<div id="ew" style="--header-h:120px">
-  <div class="container" style="position:relative;margin-top:12px">
-    <a class="back" href="javascript:history.back()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 18l-6-6 6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      Retour
-    </a>
-  </div>
+<div class="container">
+  <a class="back" href="javascript:history.back()">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 18l-6-6 6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Retour
+  </a>
 
-  <section class="product">
-    <div class="container">
-      <div class="product-wrap">
-        <div class="product-gallery">
-          <img id="mainImg" src="" alt="Produit">
-          <div class="thumbs" id="thumbs"></div>
-        </div>
-        <div class="product-info">
-          <div class="collection" id="collectionName">Collection</div>
-          <h1 id="title">Produit</h1>
-          <p class="desc" id="desc">—</p>
+  <div class="wrap">
+    <div class="gallery">
+      <img id="main" src="" alt="">
+      <div class="thumbs" id="thumbs"></div>
+    </div>
 
-          <h3 style="margin:18px 0 10px;">Textures & variantes</h3>
-          <div class="textures" id="textures"></div>
+    <div>
+      <div class="collection" id="collection">Collection</div>
+      <h1 id="title">Produit</h1>
+      <p class="desc" id="desc">—</p>
 
-          <div class="cta">
-            <button class="btn ghost" id="tech">Fiche technique</button>
-            <a class="btn" href="mailto:contact@elegance-design.fr?subject=Demande%20devis%20papier%20peint">Demander un devis</a>
-            <a class="btn ghost" id="dlimg" href="#" target="_blank" rel="noreferrer">Télécharger l’image</a>
-          </div>
-        </div>
+      <h3 style="font-family:'Playfair Display',serif;font-weight:400;margin:18px 0 10px">Textures & variantes</h3>
+      <div class="textures" id="textures"></div>
+
+      <div class="cta">
+        <button class="btn ghost" id="tech">Fiche technique</button>
+        <a class="btn" href="mailto:contact@elegance-design.fr?subject=Demande%20devis%20papier%20peint">Demander un devis</a>
+        <a class="btn ghost" id="dl" href="#" target="_blank" rel="noreferrer">Télécharger l’image</a>
       </div>
     </div>
-  </section>
+  </div>
 </div>
 
 <!-- Modal fiche technique -->
@@ -50,75 +76,65 @@
       <button class="btn ghost" id="closeTech">Fermer</button>
     </div>
     <div class="grid4">
-      <div class="tech">
-        <img src="https://img.icons8.com/ios-glyphs/90/pencil--v1.png" alt="">
-        <div>100% personnalisable</div>
-      </div>
-      <div class="tech">
-        <img src="https://img.icons8.com/ios-glyphs/90/badge.png" alt="">
-        <div>Certification wallpaper</div>
-      </div>
-      <div class="tech">
-        <img src="https://img.icons8.com/ios-glyphs/90/leaf.png" alt="">
-        <div>Encres éco-certifiées</div>
-      </div>
-      <div class="tech">
-        <img src="https://img.icons8.com/ios-glyphs/90/high-definition.png" alt="">
-        <div>Impression HD</div>
-      </div>
+      <div class="tech"><img src="https://img.icons8.com/ios-glyphs/90/pencil--v1.png" alt=""><div>100% personnalisable</div></div>
+      <div class="tech"><img src="https://img.icons8.com/ios-glyphs/90/badge.png" alt=""><div>Certification wallpaper</div></div>
+      <div class="tech"><img src="https://img.icons8.com/ios-glyphs/90/leaf.png" alt=""><div>Encres éco-certifiées</div></div>
+      <div class="tech"><img src="https://img.icons8.com/ios-glyphs/90/high-definition.png" alt=""><div>Impression HD</div></div>
     </div>
-    <div style="padding:10px 0 6px" class="muted">Fibre non tissée – lessivable – anti-feu – pose aisée.</div>
+    <div class="muted" style="padding:10px 2px 2px">Support intissé / lessivable / M1 / pose encollée au mur.</div>
   </div>
 </div>
 
 <script>
 (function(){
-  const p = new URLSearchParams(location.search);
-  const title = p.get("title") || "Produit";
-  const collection = p.get("collection") || "Collection";
-  const gallery = (p.get("gallery") || "").split("|").filter(Boolean);
-  const desc = decodeURIComponent(p.get("desc")||"").trim() || (title+" — une composition raffinée issue de la collection "+collection+".");
-
-  document.getElementById("title").textContent = title;
-  document.getElementById("collectionName").textContent = collection;
-  document.getElementById("desc").textContent = desc;
-
-  const main = document.getElementById("mainImg");
-  const thumbs = document.getElementById("thumbs");
-  const textures = document.getElementById("textures");
-  const dl = document.getElementById("dlimg");
-
-  if(gallery.length){
-    main.src = gallery[0]; dl.href = gallery[0];
-    gallery.forEach((src,i)=>{
-      const t = new Image(); t.src = src; if(i===0) t.classList.add("active");
-      t.addEventListener('click', ()=>{ main.src=src; dl.href=src; thumbs.querySelectorAll('img').forEach(el=>el.classList.remove('active')); t.classList.add('active'); });
-      thumbs.appendChild(t);
-      const tex = document.createElement('div'); tex.className='tex'; if(i===0) tex.classList.add('active');
-      tex.style.backgroundImage=`url(${src})`;
-      tex.addEventListener('click', ()=>{ main.src=src; dl.href=src; textures.querySelectorAll('.tex').forEach(el=>el.classList.remove('active')); tex.classList.add('active'); });
-      textures.appendChild(tex);
-    });
-  } else {
-    main.src = 'https://via.placeholder.com/1200x900?text=Image%20produit';
-    dl.href = main.src;
+  const dataJSON = sessionStorage.getItem('EW_PRODUCT');
+  if(!dataJSON){
+    document.getElementById('title').textContent="Produit indisponible";
+    document.getElementById('desc').textContent="Revenez à la collection pour sélectionner un modèle.";
+    document.getElementById('main').src="https://via.placeholder.com/1200x900?text=Produit";
+    document.getElementById('dl').href="#";
+    return;
   }
+  const data = JSON.parse(dataJSON);
+
+  document.getElementById('collection').textContent = data.collection || 'Collection';
+  document.getElementById('title').textContent = data.title || 'Produit';
+  document.getElementById('desc').textContent = data.desc || '';
+
+  const main = document.getElementById('main');
+  const thumbs = document.getElementById('thumbs');
+  const textures = document.getElementById('textures');
+  const dl = document.getElementById('dl');
+
+  const imgs = (data.images||[]).length ? data.images : ["https://via.placeholder.com/1200x900?text=Produit"];
+  main.src = imgs[0]; dl.href = imgs[0];
+
+  imgs.forEach((src,i)=>{
+    const t = new Image(); t.src=src; if(i===0) t.classList.add('active');
+    t.addEventListener('click', ()=>{ main.src=src; dl.href=src; thumbs.querySelectorAll('img').forEach(el=>el.classList.remove('active')); t.classList.add('active'); });
+    thumbs.appendChild(t);
+
+    const tex=document.createElement('div'); tex.className='tex'; if(i===0) tex.classList.add('active');
+    tex.style.backgroundImage=`url(${src})`;
+    tex.addEventListener('click', ()=>{ main.src=src; dl.href=src; textures.querySelectorAll('.tex').forEach(el=>el.classList.remove('active')); tex.classList.add('active'); });
+    textures.appendChild(tex);
+  });
 
   // Modal technique
   const modal = document.getElementById('modalTech');
-  document.getElementById('tech').addEventListener('click', ()=>{ modal.classList.add('open'); });
-  document.getElementById('closeTech').addEventListener('click', ()=>{ modal.classList.remove('open'); });
+  document.getElementById('tech').addEventListener('click', ()=> modal.classList.add('open'));
+  document.getElementById('closeTech').addEventListener('click', ()=> modal.classList.remove('open'));
   modal.addEventListener('click', (e)=>{ if(e.target===modal) modal.classList.remove('open'); });
-})();
-</script>
 
-<!-- Auto-resize iFrame (Wix) -->
-<script>
-(function(){
-  function postH(){try{var h=Math.max(document.documentElement.scrollHeight,document.body?document.body.scrollHeight:0);parent&&parent.postMessage({type:'EW_IFRAME_RESIZE',height:h},'*');}catch(e){}}
+  // Auto-resize iFrame (Wix)
+  function postH(){
+    try{
+      var h=Math.max(document.documentElement.scrollHeight,document.body?document.body.scrollHeight:0);
+      parent&&parent.postMessage({type:'EW_IFRAME_RESIZE',height:h},'*');
+    }catch(e){}
+  }
   window.addEventListener('load',postH); window.addEventListener('resize',postH);
   new (window.ResizeObserver||function(){return {observe:function(){}}})(postH).observe(document.documentElement);
-  document.documentElement.style.overflow='visible'; if(document.body) document.body.style.overflow='visible';
   setTimeout(postH,300); setTimeout(postH,1200);
 })();
 </script>
