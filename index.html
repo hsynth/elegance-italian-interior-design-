@@ -1,164 +1,58 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Elegance — Papiers Peints</title>
-  <link rel="stylesheet" href="styles.css"/>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elegance – Papiers Peints Haut de Gamme</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<div id="ew" style="--header-h:120px">
 
-  <!-- HERO propre -->
-  <section class="hero"></section>
+  <!-- HERO / LANDING -->
+  <section class="hero">
+    <div class="hero-overlay">
+      <h1>Papiers Peints Élégance</h1>
+      <p>Collections exclusives et personnalisation sur-mesure</p>
+    </div>
+  </section>
 
-  <!-- Collections -->
-  <section class="section">
-    <div class="container">
-      <div style="text-align:center;margin-bottom:26px">
-        <h1>Nos Collections</h1>
-        <p class="muted">Prestige · 3D · Gold</p>
+  <!-- COLLECTIONS -->
+  <section class="collections">
+    <h2>Collections</h2>
+    <div class="grid">
+      <a href="prestige.html" class="card">Prestige</a>
+      <a href="collection-3d.html" class="card">3D</a>
+      <a href="gold.html" class="card">Gold</a>
+    </div>
+  </section>
+
+  <!-- CONFIGURATEUR -->
+  <section class="configurateur">
+    <h2>Configurateur personnalisé</h2>
+    <p>Importez votre motif et visualisez-le immédiatement.</p>
+
+    <div class="config-grid">
+      <!-- Upload + formulaire -->
+      <div class="config-left">
+        <label for="upload">Votre image :</label>
+        <input type="file" id="upload" accept="image/*">
+
+        <form action="mailto:tonemail@wix.com" method="post" enctype="text/plain" class="form-contact">
+          <h3>Demande de personnalisation</h3>
+          <input type="text" name="Nom" placeholder="Nom & Prénom" required>
+          <input type="tel" name="Téléphone" placeholder="Téléphone" required>
+          <input type="email" name="Email" placeholder="Email" required>
+          <button type="submit">Envoyer la demande</button>
+        </form>
       </div>
-      <div class="grid">
-        <a class="card" href="prestige.html">
-          <img alt="Prestige" src="https://static.wixstatic.com/media/d77542_fe3d4bf7270746ca91adab75028f8e96~mv2.png">
-          <footer><h3>Prestige</h3><span class="chip">Découvrir</span></footer>
-        </a>
-        <a class="card" href="collection-3d.html">
-          <img alt="3D" src="https://static.wixstatic.com/media/d77542_50d7633186c141a79a57e2549d69c278~mv2.png">
-          <footer><h3>3D</h3><span class="chip">Découvrir</span></footer>
-        </a>
-        <a class="card" href="gold.html">
-          <img alt="Gold" src="https://static.wixstatic.com/media/d77542_74d9f4d77e5a44819123f2b70d71030b~mv2.png">
-          <footer><h3>Gold</h3><span class="chip">Découvrir</span></footer>
-        </a>
+
+      <!-- Zone d’aperçu -->
+      <div class="config-right">
+        <canvas id="previewCanvas"></canvas>
       </div>
     </div>
   </section>
 
-  <!-- Configurateur 3D (simplifié) -->
-  <section class="section config" id="configurateur">
-    <div class="container">
-      <div style="text-align:center;margin-bottom:20px">
-        <h2>Configurateur personnalisé</h2>
-        <p class="muted">Importez votre motif et visualisez-le immédiatement en 3D.</p>
-      </div>
-
-      <div class="wrap">
-        <div class="panel">
-          <label for="fileInput">Votre image</label>
-          <input id="fileInput" type="file" accept="image/*"/>
-
-          <div class="cta">
-            <button class="btn ghost" id="reset" type="button">Réinitialiser</button>
-            <button class="btn" id="download" type="button">Télécharger l’aperçu</button>
-          </div>
-
-          <hr style="border:none;border-top:1px solid var(--line);margin:16px 0">
-          <h3 style="font-family:'Playfair Display',serif;font-weight:400;margin:0 0 6px">Demande de personnalisation</h3>
-          <p class="muted" style="margin:0 0 10px">Recevez un devis en 24h.</p>
-          <div class="row" style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-            <input id="q_name" placeholder="Nom & Prénom" style="padding:10px;border:1px solid var(--line);border-radius:10px">
-            <input id="q_phone" placeholder="Téléphone" style="padding:10px;border:1px solid var(--line);border-radius:10px">
-            <input id="q_email" placeholder="Email" style="grid-column:span 2;padding:10px;border:1px solid var(--line);border-radius:10px">
-          </div>
-          <button id="quote" class="btn" style="margin-top:10px">Envoyer la demande</button>
-          <p class="muted" id="q_status" style="margin-top:6px"></p>
-        </div>
-
-        <div class="stage3d">
-          <div id="stage3d"></div>
-          <div class="hint">Souris : orbiter · molette : zoom</div>
-        </div>
-      </div>
-    </div>
-  </section>
-</div>
-
-<!-- Three.js UMD -->
-<script src="https://cdn.jsdelivr.net/npm/three@0.161.0/build/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.161.0/examples/js/controls/OrbitControls.js"></script>
-<script>
-(function(){
-  var container = document.getElementById('stage3d'); if(!container) return;
-
-  var scene = new THREE.Scene(); scene.background = new THREE.Color(0xf8f8f6);
-  var renderer = new THREE.WebGLRenderer({antialias:true, preserveDrawingBuffer:true});
-  container.appendChild(renderer.domElement);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.8));
-
-  var camera = new THREE.PerspectiveCamera(45,1,0.1,100); camera.position.set(0.9,1.5,4.2);
-  var controls = new THREE.OrbitControls(camera,renderer.domElement);
-  controls.enableDamping=true; controls.dampingFactor=.05; controls.target.set(0,1.25,0); controls.update();
-
-  scene.add(new THREE.HemisphereLight(0xffffff,0xbbbbaa,.9));
-  var dir = new THREE.DirectionalLight(0xffffff,.6); dir.position.set(2.5,4,3); scene.add(dir);
-
-  var grp = new THREE.Group(); scene.add(grp);
-  var floor = new THREE.Mesh(new THREE.PlaneGeometry(8,6), new THREE.MeshStandardMaterial({color:0xdddddd,roughness:.95}));
-  floor.rotation.x = -Math.PI/2; grp.add(floor);
-  var wallMat = new THREE.MeshStandardMaterial({color:0xf4f4f4});
-  var wall = new THREE.Mesh(new THREE.PlaneGeometry(4.5,2.7), wallMat); wall.position.set(0,1.35,-1.8); grp.add(wall);
-  var wall2 = new THREE.Mesh(new THREE.PlaneGeometry(3.2,2.7), new THREE.MeshStandardMaterial({color:0xeeeeee}));
-  wall2.position.set(-2.25,1.35,-0.2); wall2.rotation.y = Math.PI/2.6; grp.add(wall2);
-
-  function resize(){
-    var w=container.clientWidth, h=container.clientHeight||520;
-    renderer.setSize(w,h); camera.aspect=w/h; camera.updateProjectionMatrix();
-  }
-  new ResizeObserver(resize).observe(container); resize();
-
-  var loader=new THREE.TextureLoader();
-  var motifTex=null;
-
-  function applyTexture(tex){
-    // Répétition automatique pour un rendu clean
-    tex.wrapS=tex.wrapT=THREE.RepeatWrapping;
-    tex.repeat.set(1,1);
-    wall.material.map=tex; wall.material.needsUpdate=true;
-  }
-
-  document.getElementById('fileInput').addEventListener('change',function(e){
-    var f=e.target.files && e.target.files[0]; if(!f) return;
-    var url=URL.createObjectURL(f);
-    loader.load(url,function(t){ motifTex=t; applyTexture(motifTex); URL.revokeObjectURL(url); });
-  });
-
-  document.getElementById('reset').addEventListener('click',function(){
-    wall.material.map=null; wall.material.needsUpdate=true;
-    camera.position.set(0.9,1.5,4.2); controls.target.set(0,1.25,0); controls.update();
-  });
-
-  document.getElementById('download').addEventListener('click',function(){
-    var a=document.createElement('a'); a.download='aperçu-3d.png';
-    a.href=renderer.domElement.toDataURL('image/png',.95); a.click();
-  });
-
-  // Envoi de demande de personnalisation à Wix (via postMessage)
-  document.getElementById('quote').addEventListener('click',function(){
-    var name=document.getElementById('q_name').value.trim();
-    var phone=document.getElementById('q_phone').value.trim();
-    var email=document.getElementById('q_email').value.trim();
-    if(!name || !email){ document.getElementById('q_status').textContent='Merci de renseigner au minimum Nom & Email.'; return; }
-    var payload={type:'EW_QUOTE', name, phone, email};
-    try{ parent && parent.postMessage(payload,'*'); }catch(e){}
-    document.getElementById('q_status').textContent='Demande envoyée. Nous vous recontactons sous 24h.';
-  });
-
-  (function loop(){ requestAnimationFrame(loop); controls.update(); renderer.render(scene,camera); })();
-})();
-</script>
-
-<!-- Auto-resize iFrame (Wix) -->
-<script>
-(function(){
-  function postH(){try{var h=Math.max(document.documentElement.scrollHeight,document.body?document.body.scrollHeight:0); parent&&parent.postMessage({type:'EW_IFRAME_RESIZE',height:h},'*');}catch(e){}}
-  window.addEventListener('load',postH); window.addEventListener('resize',postH);
-  new (window.ResizeObserver||function(){return {observe:function(){}}})(postH).observe(document.documentElement);
-  document.documentElement.style.overflow='visible'; if(document.body) document.body.style.overflow='visible';
-  setTimeout(postH,300); setTimeout(postH,1200);
-})();
-</script>
+  <script src="script.js"></script>
 </body>
 </html>
