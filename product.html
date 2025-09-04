@@ -12,12 +12,10 @@
   <section class="product">
     <div class="container">
       <div class="product-wrap">
-        <!-- Galerie -->
         <div class="product-gallery">
           <img id="mainImg" src="" alt="Produit">
           <div class="thumbs" id="thumbs"></div>
         </div>
-        <!-- Infos -->
         <div class="product-info">
           <div class="collection" id="collectionName">Collection</div>
           <h1 id="title">Produit</h1>
@@ -42,12 +40,8 @@
   const title = p.get("title") || "Produit";
   const collection = p.get("collection") || "Collection";
   const gallery = (p.get("gallery") || "").split("|").filter(Boolean);
-  const descParam = p.get("desc");
-  const desc = descParam || (title+" — une composition raffinée issue de la collection "+collection+".");
+  const desc = p.get("desc") || (title+" — une composition raffinée issue de la collection "+collection+".");
 
-  const $ = id => document.getElementById(id);
-  $("title").textContent = title + " — Elegance";
-  $("title"); // noop to avoid lints
   document.getElementById("title").textContent = title;
   document.getElementById("collectionName").textContent = collection;
   document.getElementById("desc").textContent = desc;
@@ -58,28 +52,14 @@
   const dl = document.getElementById("dlimg");
 
   if(gallery.length){
-    main.src = gallery[0];
-    dl.href = gallery[0];
+    main.src = gallery[0]; dl.href = gallery[0];
     gallery.forEach((src,i)=>{
-      const t = new Image();
-      t.src = src;
-      if(i===0) t.classList.add("active");
-      t.addEventListener('click', ()=>{
-        main.src = src; dl.href = src;
-        thumbs.querySelectorAll('img').forEach(el=>el.classList.remove('active'));
-        t.classList.add('active');
-      });
+      const t = new Image(); t.src = src; if(i===0) t.classList.add("active");
+      t.addEventListener('click', ()=>{ main.src=src; dl.href=src; thumbs.querySelectorAll('img').forEach(el=>el.classList.remove('active')); t.classList.add('active'); });
       thumbs.appendChild(t);
-
-      const tex = document.createElement('div');
-      tex.className = 'tex';
-      if(i===0) tex.classList.add('active');
-      tex.style.backgroundImage = `url(${src})`;
-      tex.addEventListener('click', ()=>{
-        main.src = src; dl.href = src;
-        textures.querySelectorAll('.tex').forEach(el=>el.classList.remove('active'));
-        tex.classList.add('active');
-      });
+      const tex = document.createElement('div'); tex.className='tex'; if(i===0) tex.classList.add('active');
+      tex.style.backgroundImage=`url(${src})`;
+      tex.addEventListener('click', ()=>{ main.src=src; dl.href=src; textures.querySelectorAll('.tex').forEach(el=>el.classList.remove('active')); tex.classList.add('active'); });
       textures.appendChild(tex);
     });
   } else {
@@ -88,30 +68,22 @@
   }
 })();
 </script>
+
+<!-- Auto-resize iFrame (Wix) -->
+<script>
+(function(){
+  function postH(){
+    try{
+      var h=Math.max(document.documentElement.scrollHeight,document.body?document.body.scrollHeight:0);
+      parent&&parent.postMessage({type:'EW_IFRAME_RESIZE',height:h},'*');
+    }catch(e){}
+  }
+  window.addEventListener('load',postH);
+  window.addEventListener('resize',postH);
+  new (window.ResizeObserver||function(){return {observe:function(){}}})(postH).observe(document.documentElement);
+  document.documentElement.style.overflow='visible'; if(document.body) document.body.style.overflow='visible';
+  setTimeout(postH,300); setTimeout(postH,1200);
+})();
+</script>
 </body>
 </html>
-<script>
-  (function autoResizeToWix(){
-    function postH(){
-      try{
-        var h = Math.max(
-          document.documentElement.scrollHeight,
-          document.body ? document.body.scrollHeight : 0
-        );
-        parent && parent.postMessage({type:'EW_IFRAME_RESIZE', height:h}, '*');
-      }catch(e){}
-    }
-    // Resize au chargement + sur changements de layout
-    window.addEventListener('load', postH);
-    window.addEventListener('resize', postH);
-    new (window.ResizeObserver||function(){return {observe:function(){}}}) (postH)
-      .observe(document.documentElement);
-    // Garde le body scrollable si jamais
-    document.documentElement.style.overflow = 'visible';
-    document.body && (document.body.style.overflow = 'visible');
-    // Tick au cas où des images chargent après
-    setTimeout(postH, 300);
-    setTimeout(postH, 1200);
-  })();
-</script>
-
