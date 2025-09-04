@@ -1,58 +1,234 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Elegance – Papiers Peints Haut de Gamme</title>
-  <link rel="stylesheet" href="styles.css">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Elegance — Papiers Peints Haut de Gamme</title>
+
+<!-- ===== Styles intégrés (aucune dépendance externe) ===== -->
+<style>
+  /* Reset + base */
+  html,body{height:100%} html,body,*{box-sizing:border-box}
+  body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:#111;background:#f8f8f6}
+  h1,h2,h3{font-family:"Playfair Display",serif;font-weight:400;letter-spacing:.2px;margin:0 0 8px}
+  .muted{color:#6f7377}
+
+  /* Conteneur */
+  .section{padding:72px 22px}
+  .container{max-width:1320px;margin:0 auto}
+
+  /* ===== HERO PLEIN ÉCRAN (zéro bande blanche) ===== */
+  .hero{position:relative;height:100vh;min-height:540px;display:grid;place-items:center;overflow:hidden}
+  .hero::before{content:"";position:absolute;inset:0;background:url('https://static.wixstatic.com/media/d77542_1baa8f118c7a4423a7975b7536517123~mv2.jpg') center/cover no-repeat}
+  .hero .cap{position:relative;z-index:1;text-align:center;color:#fff;background:rgba(0,0,0,.35);padding:20px 26px;border-radius:12px}
+  .hero .cap p{margin:6px 0 0;font-size:14px}
+  .hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:44vh;background:linear-gradient(180deg,rgba(248,248,246,0) 0%,#f8f8f6 88%)}
+
+  /* ===== Cartes collections ===== */
+  .grid{display:grid;gap:24px;grid-template-columns:repeat(12,minmax(0,1fr))}
+  .card{grid-column:span 12;text-decoration:none;color:inherit;background:#fff;border:1px solid #e7e8eb;border-radius:16px;overflow:hidden;transition:transform .35s ease}
+  .card:hover{transform:translateY(-3px)}
+  .card img{width:100%;height:52vh;min-height:320px;object-fit:cover;display:block}
+  .card footer{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-top:1px solid #e7e8eb;background:#fff}
+  .chip{font-size:12px;letter-spacing:.06em;padding:6px 10px;border:1px solid #e7e8eb;border-radius:999px;background:#fff}
+  @media(min-width:900px){.card{grid-column:span 4}}
+
+  /* ===== Configurateur ===== */
+  .config{border-top:1px solid #e7e8eb;background:#f1f1ef}
+  .wrap{display:grid;grid-template-columns:1fr 2fr;gap:22px}
+  @media(max-width:1000px){.wrap{grid-template-columns:1fr}}
+  .panel{background:#fff;border:1px solid #e7e8eb;border-radius:14px;padding:16px}
+  .panel label{display:block;font-size:13px;color:#6f7377;margin:0 0 8px}
+  .panel input[type=file], .panel input[type=text], .panel input[type=tel], .panel input[type=email]{width:100%;padding:12px;border:1px solid #e7e8eb;border-radius:10px;background:#fff}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .row-1{display:grid;grid-template-columns:1fr;gap:10px}
+  .cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+  .btn{appearance:none;border:none;border-radius:999px;padding:12px 18px;font-size:14px;cursor:pointer;text-decoration:none;transition:background .25s}
+  .btn.primary{background:#111;color:#fff}
+  .btn.primary:hover{background:#333}
+  .btn.ghost{background:#fff;color:#111;border:1px solid #111}
+  .btn.ghost:hover{background:#111;color:#fff}
+
+  .stage{background:#fff;border:1px solid #e7e8eb;border-radius:14px;padding:10px}
+  #stage3d{height:520px;border-radius:10px;overflow:hidden;background:#f3f3f3;position:relative}
+  .hint{position:absolute;right:10px;bottom:10px;font-size:12px;background:rgba(255,255,255,.9);border:1px solid #e7e8eb;border-radius:999px;padding:6px 10px}
+
+  /* Accessibilité mobile */
+  @media(max-width:768px){
+    .hero .cap{padding:14px 16px}
+    .card img{height:40vh}
+  }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 </head>
 <body>
 
-  <!-- HERO / LANDING -->
-  <section class="hero">
-    <div class="hero-overlay">
-      <h1>Papiers Peints Élégance</h1>
-      <p>Collections exclusives et personnalisation sur-mesure</p>
-    </div>
-  </section>
+<!-- ================= HERO ================= -->
+<section class="hero" aria-label="Visuel d’introduction">
+  <div class="cap">
+    <h1>Papiers Peints Élégance</h1>
+    <p>Collections exclusives & personnalisation sur-mesure</p>
+  </div>
+</section>
 
-  <!-- COLLECTIONS -->
-  <section class="collections">
+<!-- ================= COLLECTIONS ================= -->
+<section class="section">
+  <div class="container" style="text-align:center;margin-bottom:20px">
     <h2>Collections</h2>
+    <p class="muted">Prestige · 3D · Gold</p>
+  </div>
+  <div class="container">
     <div class="grid">
-      <a href="prestige.html" class="card">Prestige</a>
-      <a href="collection-3d.html" class="card">3D</a>
-      <a href="gold.html" class="card">Gold</a>
+      <a class="card" href="prestige.html">
+        <img src="https://static.wixstatic.com/media/d77542_fe3d4bf7270746ca91adab75028f8e96~mv2.png" alt="Collection Prestige">
+        <footer><h3 style="margin:0">Prestige</h3><span class="chip">Découvrir</span></footer>
+      </a>
+      <a class="card" href="collection-3d.html">
+        <img src="https://static.wixstatic.com/media/d77542_50d7633186c141a79a57e2549d69c278~mv2.png" alt="Collection 3D">
+        <footer><h3 style="margin:0">3D</h3><span class="chip">Découvrir</span></footer>
+      </a>
+      <a class="card" href="gold.html">
+        <img src="https://static.wixstatic.com/media/d77542_74d9f4d77e5a44819123f2b70d71030b~mv2.png" alt="Collection Gold">
+        <footer><h3 style="margin:0">Gold</h3><span class="chip">Découvrir</span></footer>
+      </a>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- CONFIGURATEUR -->
-  <section class="configurateur">
+<!-- ================= CONFIGURATEUR ================= -->
+<section class="section config" id="configurateur">
+  <div class="container" style="text-align:center;margin-bottom:18px">
     <h2>Configurateur personnalisé</h2>
-    <p>Importez votre motif et visualisez-le immédiatement.</p>
+    <p class="muted">Importez votre motif : il s’applique instantanément sur le mur 3D.</p>
+  </div>
 
-    <div class="config-grid">
-      <!-- Upload + formulaire -->
-      <div class="config-left">
-        <label for="upload">Votre image :</label>
-        <input type="file" id="upload" accept="image/*">
+  <div class="container wrap">
+    <!-- Panneau gauche -->
+    <div class="panel">
+      <label for="fileInput">Votre image (jpg, png, webp)</label>
+      <input id="fileInput" type="file" accept="image/*"/>
 
-        <form action="mailto:tonemail@wix.com" method="post" enctype="text/plain" class="form-contact">
-          <h3>Demande de personnalisation</h3>
-          <input type="text" name="Nom" placeholder="Nom & Prénom" required>
-          <input type="tel" name="Téléphone" placeholder="Téléphone" required>
-          <input type="email" name="Email" placeholder="Email" required>
-          <button type="submit">Envoyer la demande</button>
-        </form>
+      <div class="cta">
+        <button class="btn ghost" id="reset" type="button">Réinitialiser</button>
+        <button class="btn primary" id="download" type="button">Télécharger l’aperçu</button>
       </div>
 
-      <!-- Zone d’aperçu -->
-      <div class="config-right">
-        <canvas id="previewCanvas"></canvas>
+      <hr style="border:none;border-top:1px solid #e7e8eb;margin:16px 0">
+
+      <h3 style="margin:0 0 6px">Demande de personnalisation</h3>
+      <p class="muted" style="margin:0 0 10px">Recevez un devis en 24h.</p>
+
+      <div class="row-1">
+        <input id="q_name" type="text" placeholder="Nom & Prénom" />
+      </div>
+      <div class="row">
+        <input id="q_phone" type="tel" placeholder="Téléphone" />
+        <input id="q_email" type="email" placeholder="Email" />
+      </div>
+      <div class="cta">
+        <button class="btn primary" id="quote">Envoyer la demande</button>
+        <span class="muted" id="q_status"></span>
       </div>
     </div>
-  </section>
 
-  <script src="script.js"></script>
+    <!-- Scène 3D -->
+    <div class="stage">
+      <div id="stage3d"></div>
+      <div class="hint">Souris : orbiter · molette : zoom</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Three.js (UMD) ===== -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.161.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.161.0/examples/js/controls/OrbitControls.js"></script>
+
+<!-- ===== JS : configurateur, envoi et auto-resize iFrame ===== -->
+<script>
+(function(){
+  // ---------- SCENE 3D ----------
+  var container = document.getElementById('stage3d');
+  var scene = new THREE.Scene(); scene.background = new THREE.Color(0xf8f8f6);
+  var renderer = new THREE.WebGLRenderer({antialias:true, preserveDrawingBuffer:true});
+  container.appendChild(renderer.domElement);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1, 1.8));
+
+  var camera = new THREE.PerspectiveCamera(45,1,0.1,100); camera.position.set(0.9,1.5,4.2);
+  var controls = new THREE.OrbitControls(camera,renderer.domElement);
+  controls.enableDamping=true; controls.dampingFactor=.05; controls.target.set(0,1.25,0); controls.update();
+
+  scene.add(new THREE.HemisphereLight(0xffffff,0xbbbbaa,.9));
+  var dir = new THREE.DirectionalLight(0xffffff,.6); dir.position.set(2.5,4,3); scene.add(dir);
+
+  var grp = new THREE.Group(); scene.add(grp);
+  var floor = new THREE.Mesh(new THREE.PlaneGeometry(8,6), new THREE.MeshStandardMaterial({color:0xdddddd,roughness:.95}));
+  floor.rotation.x = -Math.PI/2; grp.add(floor);
+  var wallMat = new THREE.MeshStandardMaterial({color:0xf4f4f4});
+  var wall = new THREE.Mesh(new THREE.PlaneGeometry(4.6,2.7), wallMat); wall.position.set(0,1.35,-1.8); grp.add(wall);
+  var wall2 = new THREE.Mesh(new THREE.PlaneGeometry(3.2,2.7), new THREE.MeshStandardMaterial({color:0xeeeeee}));
+  wall2.position.set(-2.25,1.35,-0.2); wall2.rotation.y = Math.PI/2.6; grp.add(wall2);
+
+  function resize(){
+    var w=container.clientWidth, h=container.clientHeight||520;
+    renderer.setSize(w,h); camera.aspect=w/h; camera.updateProjectionMatrix();
+  }
+  new ResizeObserver(resize).observe(container); resize();
+
+  var loader=new THREE.TextureLoader(); var motif=null;
+
+  function applyTexture(t){
+    t.wrapS=t.wrapT=THREE.RepeatWrapping;
+    t.repeat.set(1,1);
+    wall.material.map=t; wall.material.needsUpdate=true;
+  }
+
+  // ---------- UPLOAD ----------
+  document.getElementById('fileInput').addEventListener('change',function(e){
+    var f=e.target.files&&e.target.files[0]; if(!f) return;
+    var url=URL.createObjectURL(f);
+    loader.load(url,function(tex){ motif=tex; applyTexture(motif); URL.revokeObjectURL(url); }, undefined, function(){ alert("Image invalide."); });
+  });
+
+  // ---------- CONTROLS ----------
+  document.getElementById('reset').addEventListener('click',function(){
+    wall.material.map=null; wall.material.needsUpdate=true;
+    camera.position.set(0.9,1.5,4.2); controls.target.set(0,1.25,0); controls.update();
+  });
+
+  document.getElementById('download').addEventListener('click',function(){
+    var a=document.createElement('a'); a.download='aperçu-3d.png';
+    a.href=renderer.domElement.toDataURL('image/png',.95); a.click();
+  });
+
+  // ---------- DEMANDE DEVIS ----------
+  document.getElementById('quote').addEventListener('click',function(){
+    var name=document.getElementById('q_name').value.trim();
+    var phone=document.getElementById('q_phone').value.trim();
+    var email=document.getElementById('q_email').value.trim();
+    var status=document.getElementById('q_status');
+    if(!name || !email){ status.textContent="Nom et email requis."; return; }
+    // 1) Si la page est dans un iFrame Wix, on envoie à Wix
+    try{ if(parent && parent!==window){ parent.postMessage({type:'EW_QUOTE',name,phone,email},'*'); status.textContent="Demande envoyée. Merci !"; return; } }catch(e){}
+    // 2) Sinon (GitHub Pages), fallback mailto
+    var subject=encodeURIComponent("Demande de personnalisation — Elegance");
+    var body=encodeURIComponent("Nom: "+name+"\nTéléphone: "+phone+"\nEmail: "+email);
+    window.location.href="mailto:contact@elegance-design.fr?subject="+subject+"&body="+body;
+  });
+
+  // ---------- RENDER LOOP ----------
+  (function loop(){ requestAnimationFrame(loop); controls.update(); renderer.render(scene,camera); })();
+
+  // ---------- AUTO-RESIZE IFRAME (Wix) ----------
+  function postH(){
+    try{
+      var h=Math.max(document.documentElement.scrollHeight,document.body?document.body.scrollHeight:0);
+      parent&&parent.postMessage({type:'EW_IFRAME_RESIZE',height:h},'*');
+    }catch(e){}
+  }
+  window.addEventListener('load',postH); window.addEventListener('resize',postH);
+  new (window.ResizeObserver||function(){return {observe:function(){}}})(postH).observe(document.documentElement);
+  setTimeout(postH,300); setTimeout(postH,1200);
+})();
+</script>
 </body>
 </html>
