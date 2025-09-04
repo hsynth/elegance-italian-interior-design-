@@ -3,141 +3,34 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Produit - Elegance Italian Interior Design</title>
+  <title>Produit — Elegance</title>
   <link rel="stylesheet" href="styles.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
-  <style>
-    /* --- Styles spécifiques page produit --- */
-    #ew .product-page {
-      padding: 80px 0;
-    }
-    #ew .product-wrap {
-      display: grid;
-      grid-template-columns: 2fr 1fr;
-      gap: 60px;
-      align-items: start;
-    }
-    @media(max-width:1000px){
-      #ew .product-wrap { grid-template-columns: 1fr; }
-    }
-
-    /* Image principale */
-    #ew .product-gallery {
-      position: relative;
-    }
-    #ew .product-gallery img {
-      width: 100%;
-      border-radius: 12px;
-      object-fit: cover;
-      max-height: 80vh;
-    }
-    #ew .thumbs {
-      display: flex;
-      gap: 12px;
-      margin-top: 20px;
-      overflow-x: auto;
-      padding-bottom: 6px;
-    }
-    #ew .thumbs img {
-      width: 100px;
-      height: 100px;
-      object-fit: cover;
-      border-radius: 8px;
-      cursor: pointer;
-      opacity: .7;
-      transition: opacity .3s;
-    }
-    #ew .thumbs img.active,
-    #ew .thumbs img:hover {
-      opacity: 1;
-    }
-
-    /* Infos produit */
-    #ew .product-info h1 {
-      font-family: "Playfair Display", serif;
-      font-weight: 400;
-      font-size: 36px;
-      margin-bottom: 8px;
-    }
-    #ew .product-info .collection {
-      font-size: 14px;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 20px;
-    }
-    #ew .product-info p.desc {
-      font-size: 16px;
-      line-height: 1.6;
-      color: var(--ink);
-      margin-bottom: 30px;
-    }
-
-    /* Textures */
-    #ew .textures {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-    #ew .tex {
-      width: 70px;
-      height: 70px;
-      border-radius: 6px;
-      border: 1px solid var(--line);
-      background-size: cover;
-      background-position: center;
-      cursor: pointer;
-      opacity: .8;
-      transition: opacity .3s;
-    }
-    #ew .tex:hover, #ew .tex.active { opacity: 1; border-color: #111; }
-
-    /* CTA */
-    #ew .cta {
-      margin-top: 40px;
-    }
-    #ew .cta button {
-      background: #111;
-      color: #fff;
-      border: none;
-      padding: 14px 28px;
-      font-size: 15px;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background .3s;
-    }
-    #ew .cta button:hover {
-      background: #333;
-    }
-  </style>
 </head>
 <body>
-<div id="ew">
-  <section class="product-page">
+<div id="ew" style="--header-h:120px">
+  <section class="product">
     <div class="container">
       <div class="product-wrap">
-        
-        <!-- Galerie produit -->
+        <!-- Galerie -->
         <div class="product-gallery">
-          <img id="mainImg" src="" alt="">
+          <img id="mainImg" src="" alt="Produit">
           <div class="thumbs" id="thumbs"></div>
         </div>
-        
-        <!-- Infos produit -->
+        <!-- Infos -->
         <div class="product-info">
           <div class="collection" id="collectionName">Collection</div>
           <h1 id="title">Produit</h1>
-          <p class="desc" id="desc">
-            Un papier peint raffiné alliant élégance et modernité. Pensé pour sublimer vos espaces, il reflète l’esprit du design italien : sobriété, matière et détails haut de gamme.
-          </p>
-          <h3 style="margin:20px 0 10px;">Textures disponibles</h3>
+          <p class="desc" id="desc">—</p>
+
+          <h3 style="margin:18px 0 10px;">Textures & variantes</h3>
           <div class="textures" id="textures"></div>
 
           <div class="cta">
-            <button>Demander un devis</button>
+            <a class="btn" href="mailto:contact@elegance-design.fr?subject=Demande%20devis%20papier%20peint">Demander un devis</a>
+            <a class="btn ghost" id="dlimg" href="#" target="_blank" rel="noreferrer">Télécharger l’image</a>
           </div>
         </div>
-
       </div>
     </div>
   </section>
@@ -146,41 +39,52 @@
 <script>
 (function(){
   const p = new URLSearchParams(location.search);
-  const title = p.get("title")||"Produit";
-  const collection = p.get("collection")||"Collection";
-  const gallery = (p.get("gallery")||"").split("|").filter(Boolean);
+  const title = p.get("title") || "Produit";
+  const collection = p.get("collection") || "Collection";
+  const gallery = (p.get("gallery") || "").split("|").filter(Boolean);
+  const descParam = p.get("desc");
+  const desc = descParam || (title+" — une composition raffinée issue de la collection "+collection+".");
 
-  document.getElementById("title").textContent=title;
-  document.getElementById("collectionName").textContent=collection;
+  const $ = id => document.getElementById(id);
+  $("title").textContent = title + " — Elegance";
+  $("title"); // noop to avoid lints
+  document.getElementById("title").textContent = title;
+  document.getElementById("collectionName").textContent = collection;
+  document.getElementById("desc").textContent = desc;
 
-  const main=document.getElementById("mainImg");
-  const thumbs=document.getElementById("thumbs");
-  const textures=document.getElementById("textures");
+  const main = document.getElementById("mainImg");
+  const thumbs = document.getElementById("thumbs");
+  const textures = document.getElementById("textures");
+  const dl = document.getElementById("dlimg");
 
   if(gallery.length){
-    main.src=gallery[0];
+    main.src = gallery[0];
+    dl.href = gallery[0];
     gallery.forEach((src,i)=>{
-      const t=document.createElement("img");
-      t.src=src; 
+      const t = new Image();
+      t.src = src;
       if(i===0) t.classList.add("active");
-      t.onclick=()=>{
-        main.src=src;
-        document.querySelectorAll("#thumbs img").forEach(el=>el.classList.remove("active"));
-        t.classList.add("active");
-      };
+      t.addEventListener('click', ()=>{
+        main.src = src; dl.href = src;
+        thumbs.querySelectorAll('img').forEach(el=>el.classList.remove('active'));
+        t.classList.add('active');
+      });
       thumbs.appendChild(t);
 
-      const tx=document.createElement("div");
-      tx.className="tex";
-      if(i===0) tx.classList.add("active");
-      tx.style.backgroundImage=`url(${src})`;
-      tx.onclick=()=>{
-        main.src=src;
-        document.querySelectorAll("#textures .tex").forEach(el=>el.classList.remove("active"));
-        tx.classList.add("active");
-      };
-      textures.appendChild(tx);
+      const tex = document.createElement('div');
+      tex.className = 'tex';
+      if(i===0) tex.classList.add('active');
+      tex.style.backgroundImage = `url(${src})`;
+      tex.addEventListener('click', ()=>{
+        main.src = src; dl.href = src;
+        textures.querySelectorAll('.tex').forEach(el=>el.classList.remove('active'));
+        tex.classList.add('active');
+      });
+      textures.appendChild(tex);
     });
+  } else {
+    main.src = 'https://via.placeholder.com/1200x900?text=Image%20produit';
+    dl.href = main.src;
   }
 })();
 </script>
